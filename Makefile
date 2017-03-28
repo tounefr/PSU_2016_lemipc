@@ -5,14 +5,15 @@
 ## Login   <linder@epitech.net>
 ## 
 ## Started on  Tue Mar 28 10:55:35 2017 linder
-## Last update Tue Mar 28 10:59:41 2017 linder
+## Last update Tue Mar 28 12:01:27 2017 linder
 ##
 
 CC =		gcc
 
 RM =		rm -f
 
-SRCS =		main.c
+SRCS =		main.c		\
+		error.c
 
 OBJS =		$(addprefix src/, $(SRCS:.c=.o))
 
