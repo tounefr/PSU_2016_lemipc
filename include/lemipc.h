@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Tue Mar 28 10:58:32 2017 linder
-** Last update Tue Mar 28 11:46:53 2017 linder
+** Last update Tue Mar 28 18:35:34 2017 linder
 */
 
 #ifndef _LEMIPC_H_
@@ -14,10 +14,10 @@
 # define MAP_WIDTH 100
 # define MAP_HEIGHT 100
 
-typedef struct s_ipcs
+/*typedef struct s_ipcs
 {
 
-};
+};*/
 
 typedef struct s_player
 {
