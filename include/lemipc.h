@@ -11,6 +11,31 @@
 #ifndef _LEMIPC_H_
 # define _LEMIPC_H_
 
-void	exit_error(char *msg, int exit_number);
+# define MAP_WIDTH 100
+# define MAP_HEIGHT 100
+
+typedef struct s_ipcs
+{
+
+};
+
+typedef struct s_player
+{
+    int x;
+    int y;
+
+} t_player;
+
+typedef struct  s_ipc_shared
+{
+    sem_t       *lock_map;
+    t_player    **players;
+}               t_ipc_shared;
+
+// error.c
+char	exit_error(char *msg, char exit_number);
+
+// util.c
+char is_nbr(char *str);
 
 #endif /* !_LEMIPC_H_ */

@@ -13,11 +13,13 @@ CC =		gcc
 RM =		rm -f
 
 SRCS =		main.c		\
-		error.c
+		    error.c \
+		    util.c
 
 OBJS =		$(addprefix src/, $(SRCS:.c=.o))
 
-CFLAGS +=	-Wall -Wextra -Werror -L./ -I./include/
+#CFLAGS +=	-Wall -Wextra -Werror -L./ -I./include/
+CFLAGS +=	-L./ -I./include/
 
 NAME =		lemipc
 

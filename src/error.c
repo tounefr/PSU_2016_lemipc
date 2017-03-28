@@ -10,10 +10,15 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "../include/lemipc.h"
+#include <string.h>
+#include <errno.h>
+#include "lemipc.h"
 
-void	exit_error(char *msg, int exit_number)
+char	exit_error(char *msg, char exit_number)
 {
-  fprintf(stderr, "%s", msg);
-  exit(exit_number);
+    if (msg == NULL)
+        fprintf(stderr, "%s\n", strerror(errno));
+    else
+      fprintf(stderr, "%s\n", msg);
+  return exit_number;
 }
