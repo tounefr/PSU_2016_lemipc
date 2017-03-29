@@ -19,7 +19,7 @@ SRCS =		main.c		\
 OBJS =		$(addprefix src/, $(SRCS:.c=.o))
 
 #CFLAGS +=	-Wall -Wextra -Werror -L./ -I./include/
-CFLAGS +=	-L./ -I./include/
+CFLAGS +=	-L./ -I./include/ -pthread -lm
 
 NAME =		lemipc
 

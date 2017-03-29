@@ -11,26 +11,45 @@
 #ifndef _LEMIPC_H_
 # define _LEMIPC_H_
 
-# define MAP_WIDTH 100
-# define MAP_HEIGHT 100
+#include <stdio.h>
+#include <semaphore.h>
 
-typedef struct s_ipcs
+#define LOG 1
+#if LOG
+    #define LOG_MSG(...) fprintf(stderr, __VA_ARGS__)
+#else
+    #define LOG_MSG(...)
+#endif
+
+#define MAX_PLAYERS 100
+
+typedef struct s_pos
 {
-
-};
+    int x;
+    int y;
+    int i;
+} t_pos;
 
 typedef struct s_player
 {
     int x;
     int y;
-
+    int pid;
+    int is_free;
+    int team_id;
+    char is_master;
+    struct s_player *player_focus;
 } t_player;
 
-typedef struct  s_ipc_shared
+typedef struct  s_lemipc
 {
-    sem_t       *lock_map;
-    t_player    **players;
-}               t_ipc_shared;
+    sem_t       lock;
+    int         shm_key;
+    int         nbr_players;
+    t_player    players[MAX_PLAYERS];
+}               t_lemipc;
+
+extern t_lemipc *g_lemipc;
 
 // error.c
 char	exit_error(char *msg, char exit_number);
