@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Tue Mar 28 10:58:32 2017 linder
-** Last update Tue Mar 28 11:46:53 2017 linder
+** Last update Tue Mar 28 18:35:34 2017 linder
 */
 
 #ifndef _LEMIPC_H_
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <semaphore.h>
 
+<<<<<<< HEAD
 #define LOG 1
 #if LOG
     #define LOG_MSG(...) fprintf(stderr, __VA_ARGS__)
@@ -22,6 +23,12 @@
 #endif
 
 #define MAX_PLAYERS 100
+=======
+/*typedef struct s_ipcs
+{
+
+};*/
+>>>>>>> 0e9a1a923d7774ad901de08feb5fffd1784d29cc
 
 typedef struct s_pos
 {
@@ -29,14 +36,6 @@ typedef struct s_pos
     int y;
     int i;
 } t_pos;
-
-typedef struct s_dist_cmp
-{
-    t_pos dest;
-    int min;
-    t_pos my_pos;
-    t_pos ennemy_pos;
-} t_dist_cmp;
 
 typedef struct s_player
 {

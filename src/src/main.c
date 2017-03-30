@@ -17,7 +17,6 @@
 #include <string.h>
 #include <errno.h>
 #include <signal.h>
-#include <time.h>
 #include <math.h>
 #include "lemipc.h"
 
@@ -268,142 +267,37 @@ char focus_ennemy(t_player *me, t_player *players) {
     return 0;
 }
 
-char display_map(t_lemipc *s_lemipc) {
+char display_map() {
     int max;
     int x;
     int y;
-    int i;
-    int i2;
-    int c;
 
     max = round(sqrt(MAX_PLAYERS));
     y = -1;
     while (++y < max) {
         x = -1;
         while (++x < max) {
-            i = (y * max) + x;
-            i2 = -1;
-            c = '_';
-            while (++i2 < MAX_PLAYERS) {
-                if (!s_lemipc->players[i2].is_free &&
-                    s_lemipc->players[i2].x == x &&
-                    s_lemipc->players[i2].y == y &&
-                    s_lemipc->players[i2].team_id != -1)
-                        c = s_lemipc->players[i2].team_id + '0';
-            }
-            printf("%c", c);
-
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
-
-char has_player_on_this_pos(t_player *players, int x, int y) {
-    int i;
-
-    i = -1;
-    while (++i < MAX_PLAYERS) {
-        if (!players[i].is_free &&
-            players[i].x == x &&
-            players[i].y == y) {
-            return 1;
+            
         }
     }
-    return 0;
-}
-
-char is_good_pos(int x, int y) {
-    int max;
-
-    max = round(sqrt(MAX_PLAYERS)) - 1;
-    return (x >= 0 && x <= max && y >= 0 && y <= max);
-}
-
-int  abs(int x) {
-    if (x < 0)
-        return -x;
-    return x;
-}
-
-int calc_dist(int x1, int y1, int x2, int y2) {
-    return abs(x2 - x1) + abs(y2 - y1);
-}
-
-t_pos init_pos(int x, int y) {
-    t_pos pos;
-
-    pos.x = x;
-    pos.y = y;
-    return pos;
-}
-
-char check_dest_pos(t_player *me,
-                    t_dist_cmp *dist_cmp,
-                    t_pos test_pos,
-                    t_player **players) {
-    int v;
-
-    if (!is_good_pos(test_pos.x, test_pos.y))
-        return 0;
-    v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x, me->player_focus->y);
-    if (v < dist_cmp->min)
-        dist_cmp->min = v;
-    if (has_player_on_this_pos(players, test_pos.x, test_pos.y))
-        return 0;
-    dist_cmp->dest.x = test_pos.x;
-    dist_cmp->dest.y = test_pos.y;
-    return 1;
-}
-
-char eat_ennemies_around(t_player *me) {
 }
 
 char move_forward(t_lemipc *s_lemipc, t_player *me) {
-    int max;
-    char flag;
-    t_dist_cmp dist_cmp;
-
     if (!me->player_focus)
         return 0;
-    max = round(sqrt(MAX_PLAYERS)) - 1;
-    flag = 0;
-    //top
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x, me->y - 1), &s_lemipc->players);
-    //right-top
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y - 1), &s_lemipc->players);
-    //right
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y), &s_lemipc->players);
-    //right-bottom
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y + 1), &s_lemipc->players);
-    //bottom
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x, me->y + 1), &s_lemipc->players);
-    //left-bottom
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x - 1, me->y + 1), &s_lemipc->players);
-    //left
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x - 1, me->y), &s_lemipc->players);
-    //left-top
-    flag |= check_dest_pos(me, &dist_cmp, init_pos(me->x - 1, me->y - 1), &s_lemipc->players);
-
-    me->x = dist_cmp.dest.x;
-    me->y = dist_cmp.dest.y;
-
-    eat_ennemies_around(me);
-
     return 1;
 }
 
-/*
 char master_game_mode(t_lemipc *s_lemipc, t_player *me) {
 }
+
 char slave_game_mode(t_lemipc *s_lemipc, t_player *me) {
 }
-*/
 
 char loop(t_lemipc *s_lemipc, t_player *me) {
     while (1) {
-        if (/*!can_playing(s_lemipc, me) ||
-            */!focus_ennemy(me, &s_lemipc->players) ||
+        if (!can_playing(s_lemipc, me) ||
+            !focus_ennemy(me, &s_lemipc->players) ||
             !move_forward(s_lemipc, me)) {
 
             LOG_MSG("[IDLE] Me: pid=%d x=%d y=%d team_id=%d\n",
@@ -412,18 +306,18 @@ char loop(t_lemipc *s_lemipc, t_player *me) {
                     me->y,
                     me->team_id);
 
-        } else {
-            LOG_MSG("[PLAYING] Me: pid=%d x=%d y=%d team_id=%d | ennemy: pid=%d x=%d y=%d team_id=%d\n",
-                    me->pid,
-                    me->x,
-                    me->y,
-                    me->team_id,
-                    me->player_focus->pid,
-                    me->player_focus->x,
-                    me->player_focus->y,
-                    me->player_focus->team_id);
+            sleep(1);
+            continue;
         }
-       display_map(s_lemipc);
+        LOG_MSG("[PLAYING] Me: pid=%d x=%d y=%d team_id=%d | ennemy: pid=%d x=%d y=%d team_id=%d\n",
+                me->pid,
+                me->x,
+                me->y,
+                me->team_id,
+                me->player_focus->pid,
+                me->player_focus->x,
+                me->player_focus->y,
+                me->player_focus->team_id);
 
         /*
         if (me->is_master)
