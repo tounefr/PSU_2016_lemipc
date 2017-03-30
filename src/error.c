@@ -8,10 +8,6 @@
 ** Last update Tue Mar 28 18:35:02 2017 linder
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <errno.h>
 #include "lemipc.h"
 
 char	exit_error(char *msg, char exit_number)

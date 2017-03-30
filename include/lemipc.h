@@ -13,6 +13,17 @@
 
 #include <stdio.h>
 #include <semaphore.h>
+#include <sys/ipc.h>
+#include <sys/types.h>
+#include <sys/shm.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <errno.h>
+#include <time.h>
+#include <math.h>
+#include <signal.h>
 
 #define LOG 1
 #if LOG
@@ -64,5 +75,35 @@ char	exit_error(char *msg, char exit_number);
 
 // util.c
 char is_nbr(char *str);
+
+t_player *get_player_in_same_team(t_player *me, t_player *players);
+char on_player_leave(t_player *me, t_lemipc *lemipc);
+t_player *get_player_slot(t_lemipc *lemipc);
+char is_player_master(t_player *players, int team_id);
+t_pos get_xy_pos(int i);
+t_pos rand_player_pos(t_lemipc *lemipc);
+void debug_players(t_player *players);
+char init_new_player(t_player **me, int team_id, t_lemipc *lemipc);
+char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id);
+void init_s_player(t_player *player);
+char init_s_lemipc(t_lemipc *lemipc, int shm_key);
+char get_shared_lemipc(t_lemipc **s_lemipc, char *path);
+char can_playing(t_lemipc *s_lemipc, t_player *me);
+char focus_ennemy(t_player *me, t_player *players);
+char display_map(t_lemipc *s_lemipc);
+char has_player_on_this_pos(t_player *players, int x, int y);
+char is_good_pos(int x, int y);
+int  abs(int x);
+int calc_dist(int x1, int y1, int x2, int y2);
+t_pos init_pos(int x, int y);
+char check_dest_pos(t_player *me,
+                    t_dist_cmp *dist_cmp,
+                    t_pos test_pos,
+                    t_player **players);
+char eat_ennemies_around(t_player *me);
+char move_forward(t_lemipc *s_lemipc, t_player *me);
+char game_loop(t_lemipc *s_lemipc, t_player *me);
+char game_start(char *path, int team_nb);
+void sighandler(int signum);
 
 #endif /* !_LEMIPC_H_ */

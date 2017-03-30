@@ -14,7 +14,13 @@ RM =		rm -f
 
 SRCS =		main.c		\
 		    error.c \
-		    util.c
+		    util.c \
+		    player.c \
+		    movement.c \
+		    signal.c \
+		    init.c \
+		    debug.c \
+		    game.c
 
 OBJS =		$(addprefix src/, $(SRCS:.c=.o))
 

@@ -1,4 +1,5 @@
-#include <string.h>
+
+#include "lemipc.h"
 
 char is_nbr(char *str) {
     int i;
@@ -11,4 +12,10 @@ char is_nbr(char *str) {
             return 0;
     }
     return 1;
+}
+
+int  abs(int x) {
+    if (x < 0)
+        return -x;
+    return x;
 }
