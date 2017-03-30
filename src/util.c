@@ -19,3 +19,12 @@ int  abs(int x) {
         return -x;
     return x;
 }
+
+char	exit_error(char *msg, char exit_number)
+{
+    if (msg == NULL)
+        fprintf(stderr, "%s\n", strerror(errno));
+    else
+        fprintf(stderr, "%s\n", msg);
+    return (exit_number);
+}

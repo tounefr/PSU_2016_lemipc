@@ -15,7 +15,7 @@ int calc_dist(int x1, int y1, int x2, int y2) {
 char check_dest_pos(t_player *me,
                     t_dist_cmp *dist_cmp,
                     t_pos test_pos,
-                    t_player **players) {
+                    t_player (*players)[MAX_PLAYERS]) {
     int v;
 
     if (!is_good_pos(test_pos.x, test_pos.y))
@@ -25,8 +25,10 @@ char check_dest_pos(t_player *me,
         dist_cmp->min = v;
     if (has_player_on_this_pos(players, test_pos.x, test_pos.y))
         return 0;
-    dist_cmp->dest.x = test_pos.x;
-    dist_cmp->dest.y = test_pos.y;
+    if (v == dist_cmp->min) {
+        dist_cmp->dest.x = test_pos.x;
+        dist_cmp->dest.y = test_pos.y;
+    }
     return 1;
 }
 

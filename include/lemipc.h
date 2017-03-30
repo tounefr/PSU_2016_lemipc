@@ -32,6 +32,7 @@
     #define LOG_MSG(...)
 #endif
 
+#define MAX_SIG 31
 #define MAX_PLAYERS 100
 
 typedef struct s_pos
@@ -99,11 +100,12 @@ t_pos init_pos(int x, int y);
 char check_dest_pos(t_player *me,
                     t_dist_cmp *dist_cmp,
                     t_pos test_pos,
-                    t_player **players);
+                    t_player (*players)[MAX_PLAYERS]);
 char eat_ennemies_around(t_player *me);
 char move_forward(t_lemipc *s_lemipc, t_player *me);
 char game_loop(t_lemipc *s_lemipc, t_player *me);
 char game_start(char *path, int team_nb);
+void clean_ipcs(t_lemipc *lemipc);
 void sighandler(int signum);
 
 #endif /* !_LEMIPC_H_ */

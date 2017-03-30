@@ -1,5 +1,27 @@
 #include "lemipc.h"
 
+void debug_players(t_player *players) {
+    int i;
+    int c;
+
+    c = 0;
+    i = -1;
+    while (++i < MAX_PLAYERS) {
+        if (!players[i].is_free) {
+            c++;
+            printf("x=%d y=%d is_free=%d pid=%d team_id=%d is_master=%d\n",
+                   players[i].x,
+                   players[i].y,
+                   players[i].is_free,
+                   players[i].pid,
+                   players[i].team_id,
+                   players[i].is_master
+            );
+        }
+    }
+    printf("count = %d\n", c);
+}
+
 char display_map(t_lemipc *s_lemipc) {
     int max;
     int x;
@@ -24,7 +46,6 @@ char display_map(t_lemipc *s_lemipc) {
                     c = s_lemipc->players[i2].team_id + '0';
             }
             printf("%c", c);
-
         }
         printf("\n");
     }

@@ -13,7 +13,7 @@ void init_s_player(t_player *player) {
 char init_s_lemipc(t_lemipc *lemipc, int shm_key) {
     int i;
 
-    LOG_MSG("Starting the game\n", getpid());
+    LOG_MSG("Starting the game\n");
     lemipc->shm_key = shm_key;
     i = -1;
     while (++i < MAX_PLAYERS) {

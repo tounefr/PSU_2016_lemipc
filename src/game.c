@@ -46,7 +46,7 @@ char game_start(char *path, int team_nb) {
     t_player *me;
     t_lemipc *s_lemipc;
 
-    signal(SIGINT, sighandler);
+    catch_signals();
     srand(time(NULL));
     if (!get_shared_lemipc(&s_lemipc, path))
         return 0;
@@ -121,7 +121,6 @@ char focus_ennemy(t_player *me, t_player *players) {
     return 0;
 }
 
-
 char eat_ennemies_around(t_player *me) {
 }
 
@@ -135,7 +134,7 @@ char move_forward(t_lemipc *s_lemipc, t_player *me) {
     //top
     check_dest_pos(me, &dist_cmp, init_pos(me->x, me->y - 1), &s_lemipc->players);
     //right-top
-     check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y - 1), &s_lemipc->players);
+    check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y - 1), &s_lemipc->players);
     //right
     check_dest_pos(me, &dist_cmp, init_pos(me->x + 1, me->y), &s_lemipc->players);
     //right-bottom

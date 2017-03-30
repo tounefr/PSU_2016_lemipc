@@ -13,7 +13,6 @@ CC =		gcc
 RM =		rm -f
 
 SRCS =		main.c		\
-		    error.c \
 		    util.c \
 		    player.c \
 		    movement.c \
