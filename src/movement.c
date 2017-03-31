@@ -23,7 +23,7 @@ char check_dest_pos(t_player *me,
     v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x, me->player_focus->y);
     if (v < dist_cmp->min)
         dist_cmp->min = v;
-    if (has_player_on_this_pos(players, test_pos.x, test_pos.y))
+    if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
         return 0;
     if (v == dist_cmp->min) {
         dist_cmp->dest.x = test_pos.x;
@@ -61,18 +61,20 @@ t_pos rand_player_pos(t_lemipc *lemipc) {
     return rand_pos;
 }
 
-char has_player_on_this_pos(t_player *players, int x, int y) {
+t_player *has_player_on_this_pos(t_player *players, int x, int y) {
     int i;
 
     i = -1;
+    if (!is_good_pos(x, y))
+        return NULL;
     while (++i < MAX_PLAYERS) {
         if (!players[i].is_free &&
             players[i].x == x &&
             players[i].y == y) {
-            return 1;
+            return &players[i];
         }
     }
-    return 0;
+    return NULL;
 }
 
 t_pos get_xy_pos(int i) {

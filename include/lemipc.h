@@ -33,7 +33,8 @@
 #endif
 
 #define MAX_SIG 31
-#define MAX_PLAYERS 100
+#define MAX_PLAYERS 50
+#define GAME_SLEEP 1
 
 typedef struct s_pos
 {
@@ -63,7 +64,7 @@ typedef struct s_player
 
 typedef struct  s_lemipc
 {
-    sem_t       lock;
+    sem_t       move_lock;
     int         shm_key;
     int         nbr_players;
     t_player    players[MAX_PLAYERS];
@@ -92,7 +93,7 @@ char get_shared_lemipc(t_lemipc **s_lemipc, char *path);
 char can_playing(t_lemipc *s_lemipc, t_player *me);
 char focus_ennemy(t_player *me, t_player *players);
 char display_map(t_lemipc *s_lemipc);
-char has_player_on_this_pos(t_player *players, int x, int y);
+t_player *has_player_on_this_pos(t_player *players, int x, int y);
 char is_good_pos(int x, int y);
 int  abs(int x);
 int calc_dist(int x1, int y1, int x2, int y2);
@@ -101,7 +102,7 @@ char check_dest_pos(t_player *me,
                     t_dist_cmp *dist_cmp,
                     t_pos test_pos,
                     t_player (*players)[MAX_PLAYERS]);
-char eat_ennemies_around(t_player *me);
+char eat_ennemies_around(t_lemipc *s_lemipc);
 char move_forward(t_lemipc *s_lemipc, t_player *me);
 char game_loop(t_lemipc *s_lemipc, t_player *me);
 char game_start(char *path, int team_nb);

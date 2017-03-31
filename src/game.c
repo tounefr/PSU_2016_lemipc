@@ -8,8 +8,10 @@ char slave_game_mode(t_lemipc *s_lemipc, t_player *me) {
 
 char game_loop(t_lemipc *s_lemipc, t_player *me) {
     while (1) {
-        if (/*!can_playing(s_lemipc, me) ||
-            */!focus_ennemy(me, &s_lemipc->players) ||
+        sem_wait(&s_lemipc->move_lock);
+
+        if (!can_playing(s_lemipc, me) ||
+            !focus_ennemy(me, &s_lemipc->players) ||
               !move_forward(s_lemipc, me)) {
 
             LOG_MSG("[IDLE] Me: pid=%d x=%d y=%d team_id=%d\n",
@@ -29,15 +31,11 @@ char game_loop(t_lemipc *s_lemipc, t_player *me) {
                     me->player_focus->y,
                     me->player_focus->team_id);
         }
+
         display_map(s_lemipc);
 
-        /*
-        if (me->is_master)
-            master_game_mode(s_lemipc, me);
-        else
-            slave_game_mode(s_lemipc, me);
-            */
-        sleep(1);
+        sem_post(&s_lemipc->move_lock);
+        sleep(GAME_SLEEP);
     }
     return 1;
 }
@@ -59,6 +57,7 @@ char game_start(char *path, int team_nb) {
 void clean_ipcs(t_lemipc *lemipc) {
     if (lemipc->nbr_players <= 0) {
         shmctl(lemipc->shm_key, IPC_RMID, NULL);
+        sem_close(&lemipc->move_lock);
         LOG_MSG("IPCS cleaned\n");
     }
 }
@@ -121,7 +120,50 @@ char focus_ennemy(t_player *me, t_player *players) {
     return 0;
 }
 
-char eat_ennemies_around(t_player *me) {
+char check_ennemy_on_this_pos(t_player *players, t_player *player, int x, int y) {
+    t_player *ennemy;
+
+    return ((ennemy = has_player_on_this_pos(players, x, y)) &&
+            ennemy->team_id != player->team_id);
+}
+
+char count_ennemies_around(t_player *players, t_player *player) {
+    int x;
+    int y;
+    char c;
+
+    c = 0;
+    x = player->x;
+    y = player->y;
+    c += check_ennemy_on_this_pos(players, player, x, y - 1);
+    c += check_ennemy_on_this_pos(players, player, x + 1, y - 1);
+    c += check_ennemy_on_this_pos(players, player, x + 1, y);
+    c += check_ennemy_on_this_pos(players, player, x + 1, y + 1);
+    c += check_ennemy_on_this_pos(players, player, x, y + 1);
+    c += check_ennemy_on_this_pos(players, player, x - 1, y + 1);
+    c += check_ennemy_on_this_pos(players, player, x - 1, y);
+    c += check_ennemy_on_this_pos(players, player, x - 1, y - 1);
+    return c;
+}
+
+void kill_process(int pid) {
+    if (-1 == kill(pid, SIGUSR1)) {
+        LOG_MSG("Failed to kill process id=%d cause=%s\n",
+                pid, strerror(errno));
+    }
+}
+
+char eat_ennemies_around(t_lemipc *s_lemipc) {
+    int i;
+
+    i = -1;
+    while (++i < MAX_PLAYERS) {
+        if (s_lemipc->players[i].is_free == 0) {
+            if (count_ennemies_around(&s_lemipc->players,
+                                      &s_lemipc->players[i]) > 1)
+                kill_process(s_lemipc->players[i].pid);
+        }
+    }
 }
 
 char move_forward(t_lemipc *s_lemipc, t_player *me) {
@@ -131,6 +173,7 @@ char move_forward(t_lemipc *s_lemipc, t_player *me) {
     if (!me->player_focus)
         return 0;
     max = round(sqrt(MAX_PLAYERS)) - 1;
+
     //top
     check_dest_pos(me, &dist_cmp, init_pos(me->x, me->y - 1), &s_lemipc->players);
     //right-top
@@ -151,7 +194,7 @@ char move_forward(t_lemipc *s_lemipc, t_player *me) {
     me->x = dist_cmp.dest.x;
     me->y = dist_cmp.dest.y;
 
-    eat_ennemies_around(me);
+    eat_ennemies_around(s_lemipc);
 
     return 1;
 }

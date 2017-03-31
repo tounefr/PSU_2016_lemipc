@@ -14,6 +14,8 @@ char init_s_lemipc(t_lemipc *lemipc, int shm_key) {
     int i;
 
     LOG_MSG("Starting the game\n");
+    if (-1 == sem_init(&lemipc->move_lock, 1, 1))
+        return exit_error(NULL, 0);
     lemipc->shm_key = shm_key;
     i = -1;
     while (++i < MAX_PLAYERS) {
