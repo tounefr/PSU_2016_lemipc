@@ -19,17 +19,18 @@ char check_dest_pos(t_player *me,
     int v;
 
     if (!is_good_pos(test_pos.x, test_pos.y))
-        return 0;
+        return -1;
     v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x, me->player_focus->y);
-    if (v < dist_cmp->min)
-        dist_cmp->min = v;
+    LOG_MSG("dist=%d\n", v);
     if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
-        return 0;
+        return -1;
+    if (dist_cmp->min == -1 || v < dist_cmp->min)
+        dist_cmp->min = v;
     if (v == dist_cmp->min) {
         dist_cmp->dest.x = test_pos.x;
         dist_cmp->dest.y = test_pos.y;
     }
-    return 1;
+    return v;
 }
 
 

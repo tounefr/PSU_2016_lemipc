@@ -28,14 +28,14 @@ char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id) {
     return init_new_player(me, team_id, lemipc);
 }
 
-t_player *get_player_in_same_team(t_player *me, t_player *players) {
+t_player *get_player_in_same_team(t_player *me, t_player (*players)[MAX_PLAYERS]) {
     int i;
 
     i = -1;
     while (++i < MAX_PLAYERS) {
-        if (players[i].team_id == me->team_id &&
-            players[i].is_free == 0 &&
-            players[i].pid != me->pid)
+        if (players[i]->team_id == me->team_id &&
+            players[i]->is_free == 0 &&
+            players[i]->pid != me->pid)
             return &players[i];
     }
     return NULL;
@@ -46,6 +46,7 @@ char on_player_leave(t_player *me, t_lemipc *lemipc) {
 
     if (me == NULL)
         return 0;
+    printf("You've been killed\n");
     LOG_MSG("\non_player_leave\n");
     LOG_MSG("Cur nbr players=%d\n", lemipc->nbr_players);
     if (me->is_master) {

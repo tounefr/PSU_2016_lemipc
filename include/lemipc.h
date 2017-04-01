@@ -33,7 +33,7 @@
 #endif
 
 #define MAX_SIG 31
-#define MAX_PLAYERS 50
+#define MAX_PLAYERS 500
 #define GAME_SLEEP 1
 
 typedef struct s_pos
@@ -78,7 +78,7 @@ char	exit_error(char *msg, char exit_number);
 // util.c
 char is_nbr(char *str);
 
-t_player *get_player_in_same_team(t_player *me, t_player *players);
+t_player *get_player_in_same_team(t_player *me, t_player (*players)[MAX_PLAYERS]);
 char on_player_leave(t_player *me, t_lemipc *lemipc);
 t_player *get_player_slot(t_lemipc *lemipc);
 char is_player_master(t_player *players, int team_id);
@@ -93,7 +93,6 @@ char get_shared_lemipc(t_lemipc **s_lemipc, char *path);
 char can_playing(t_lemipc *s_lemipc, t_player *me);
 char focus_ennemy(t_player *me, t_player *players);
 char display_map(t_lemipc *s_lemipc);
-t_player *has_player_on_this_pos(t_player *players, int x, int y);
 char is_good_pos(int x, int y);
 int  abs(int x);
 int calc_dist(int x1, int y1, int x2, int y2);
@@ -108,5 +107,9 @@ char game_loop(t_lemipc *s_lemipc, t_player *me);
 char game_start(char *path, int team_nb);
 void clean_ipcs(t_lemipc *lemipc);
 void sighandler(int signum);
+char count_ennemies_around(t_player (*players)[MAX_PLAYERS], t_player *player);
+t_player *has_player_on_this_pos(t_player *players, int x, int y);
+//char check_ennemy_on_this_pos(t_player (*players)[MAX_PLAYERS], t_player *player, int x, int y);
+char check_ennemy_on_this_pos(t_player (*players)[MAX_PLAYERS], t_player *player, int x, int y);
 
 #endif /* !_LEMIPC_H_ */
