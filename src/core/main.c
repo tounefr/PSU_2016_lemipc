@@ -8,7 +8,7 @@
 ** Last update Tue Mar 28 14:42:17 2017 linder
 */
 
-#include "lemipc.h"
+#include "core.h"
 
 t_lemipc *g_lemipc = NULL;
 

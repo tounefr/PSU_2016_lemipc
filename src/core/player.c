@@ -1,5 +1,5 @@
 
-#include "lemipc.h"
+#include "core.h"
 
 char init_new_player(t_player **me, int team_id, t_lemipc *lemipc) {
     t_pos xy_pos;
@@ -28,14 +28,14 @@ char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id) {
     return init_new_player(me, team_id, lemipc);
 }
 
-t_player *get_player_in_same_team(t_player *me, t_player (*players)[MAX_PLAYERS]) {
+t_player *get_player_in_same_team(t_player *me, t_player *players) {
     int i;
 
     i = -1;
     while (++i < MAX_PLAYERS) {
-        if (players[i]->team_id == me->team_id &&
-            players[i]->is_free == 0 &&
-            players[i]->pid != me->pid)
+        if (players[i].team_id == me->team_id &&
+            players[i].is_free == 0 &&
+            players[i].pid != me->pid)
             return &players[i];
     }
     return NULL;

@@ -1,5 +1,5 @@
 
-#include "lemipc.h"
+#include "core.h"
 
 char is_good_pos(int x, int y) {
     int max;

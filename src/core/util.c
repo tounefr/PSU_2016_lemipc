@@ -1,5 +1,5 @@
 
-#include "lemipc.h"
+#include "common.h"
 
 char is_nbr(char *str) {
     int i;

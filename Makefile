@@ -8,37 +8,47 @@
 ## Last update Tue Mar 28 12:01:27 2017 linder
 ##
 
-CC =		gcc
+LEMIPC_NAME = lemipc
 
-RM =		rm -f
+LEMIPC_SHARED_NAME = liblemipc_shared.so
 
-SRCS =		main.c		\
-		    util.c \
-		    player.c \
-		    movement.c \
-		    signal.c \
-		    init.c \
-		    debug.c \
-		    game.c
+GUI_SDL_NAME = gui_sdl
 
-OBJS =		$(addprefix src/, $(SRCS:.c=.o))
+GUI_CLI_NAME = gui_cli
 
-#CFLAGS +=	-Wall -Wextra -Werror -L./ -I./include/
-CFLAGS +=	-L./ -I./include/ -pthread -lm -g
+$(LEMIPC_NAME):
+	$(MAKE) -C src/core/ re
+	mv src/core/a.out ./$(LEMIPC_NAME)
 
-NAME =		lemipc
+$(LEMIPC_SHARED_NAME):
+	$(MAKE) -C src/common re
+	mv src/common/a.out ./$(LEMIPC_SHARED_NAME)
 
-all:		$(NAME)
+$(GUI_SDL_NAME):
+	$(MAKE) -C src/gui/sdl re
+	mv src/gui/sdl/a.out ./$(GUI_SDL_NAME)
 
-$(NAME):	$(OBJS)
-		$(CC) -o $(NAME) $(OBJS) $(CFLAGS)
+$(GUI_CLI_NAME):
+	$(MAKE) -C src/gui/cli re
+	mv src/gui/cli/a.out ./$(GUI_CLI_NAME)
+
+all: re
+
+re: $(LEMIPC_SHARED_NAME) $(LEMIPC_NAME) $(GUI_CLI_NAME)
+
+fclean:
+	$(MAKE) -C src/core fclean
+	$(MAKE) -C src/common fclean
+#	$(MAKE) -C src/gui/sdl fclean
+#	$(MAKE) -C src/gui/cli fclean
+	rm $(LEMIPC_NAME)
+	rm $(LEMIPC_SHARED_NAME)
+	rm $(GUI_CLI_NAME)
 
 clean:
-		$(RM) $(OBJS)
+	$(MAKE) -C src/core clean
+	$(MAKE) -C src/common clean
+#	$(MAKE) -C src/gui/sdl clean
+#	$(MAKE) -C src/gui/cli clean
 
-fclean:		clean
-		$(RM) $(NAME)
-
-re:		fclean all
-
-.PHONY:		all clean fclean re
+.PHONY: re fclean clean

@@ -1,5 +1,9 @@
 
-#include "lemipc.h"
+#define _GNU_SOURCE
+#include <dlfcn.h>
+#include <assert.h>
+#include "common.h"
+#include "core.h"
 
 char master_game_mode(t_lemipc *s_lemipc, t_player *me) {
 }
@@ -32,11 +36,26 @@ char game_loop(t_lemipc *s_lemipc, t_player *me) {
                     me->player_focus->team_id);
         }
 
-        display_map(s_lemipc);
+ //       display_map(s_lemipc);
 
         sem_post(&s_lemipc->move_lock);
         sleep(GAME_SLEEP);
     }
+    return 1;
+}
+
+char get_shr_mem_handle(t_lemipc **s_lemipc, char *path) {
+    void *shared_handle;
+    char (*get_shared_lemipc)(t_lemipc **, char *);
+
+    shared_handle = dlopen("./liblemipc_shared.so", RTLD_LAZY);
+    assert(shared_handle != NULL);
+    get_shared_lemipc = dlsym(shared_handle, "get_shared_lemipc");
+    assert(get_shared_lemipc != NULL);
+    if (!get_shared_lemipc(s_lemipc, path))
+        return 0;
+    dlclose(shared_handle);
+    g_lemipc = *s_lemipc;
     return 1;
 }
 
@@ -46,8 +65,7 @@ char game_start(char *path, int team_nb) {
 
     catch_signals();
     srand(time(NULL));
-    if (!get_shared_lemipc(&s_lemipc, path))
-        return 0;
+    get_shr_mem_handle(&s_lemipc, path);
     if (!new_player_slot(&me, s_lemipc, team_nb))
         return 0;
     debug_players(s_lemipc->players);
@@ -60,30 +78,6 @@ void clean_ipcs(t_lemipc *lemipc) {
         sem_close(&lemipc->move_lock);
         LOG_MSG("IPCS cleaned\n");
     }
-}
-
-char get_shared_lemipc(t_lemipc **s_lemipc, char *path) {
-    key_t key;
-    int shm_key;
-    int created;
-
-    key = ftok(path, 0);
-    created = 0;
-    shm_key = shmget(key, sizeof(t_lemipc), SHM_R | SHM_W);
-    if (-1 == shm_key) {
-        shm_key = shmget(key, sizeof(t_lemipc), IPC_CREAT | SHM_R | SHM_W);
-        if (-1 == shm_key)
-            return exit_error(NULL, 0);
-        created = 1;
-    }
-    LOG_MSG("Shm key=%d\n", shm_key);
-    *s_lemipc = shmat(shm_key, NULL, SHM_R | SHM_W);
-    if (s_lemipc == ((void*) - 1))
-        return exit_error(NULL, 0);
-    g_lemipc = *s_lemipc;
-    if (created && !init_s_lemipc(*s_lemipc, shm_key))
-        return 0;
-    return 1;
 }
 
 char can_playing(t_lemipc *s_lemipc, t_player *me) {
