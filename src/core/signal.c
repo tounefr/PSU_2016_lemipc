@@ -1,9 +1,20 @@
 
 #include "core.h"
 
-void sighandler(int signum) {
-    if (g_lemipc != NULL)
-        on_player_leave(get_player_slot(g_lemipc), g_lemipc);
+void            sighandler(int signum)
+{
+    t_player    *player;
+
+    if (g_lemipc != NULL) {
+        sem_wait(&g_lemipc->move_lock);
+        if ((player = get_player_slot(g_lemipc))) {
+            init_s_player(player);
+            g_lemipc->nbr_players--;
+            if (g_lemipc->nbr_players <= 0)
+                clean_ipcs(g_lemipc);
+        }
+        sem_post(&g_lemipc->move_lock);
+    }
     exit(0);
 }
 

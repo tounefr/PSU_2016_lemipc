@@ -16,11 +16,11 @@ char init_s_lemipc(t_lemipc *lemipc, int shm_key) {
     LOG_MSG("Starting the game\n");
     if (-1 == sem_init(&lemipc->move_lock, 1, 1))
         return 0;
+    lemipc->nbr_players = 0;
     lemipc->shm_key = shm_key;
     i = -1;
-    while (++i < MAX_PLAYERS) {
+    while (++i < MAX_PLAYERS)
         init_s_player(&lemipc->players[i]);
-    }
     return 1;
 }
 

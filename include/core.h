@@ -48,7 +48,7 @@ char check_dest_pos(t_player *me,
                     t_player (*players)[MAX_PLAYERS]);
 char eat_ennemies_around(t_lemipc *s_lemipc);
 char move_forward(t_lemipc *s_lemipc, t_player *me);
-char game_loop(t_lemipc *s_lemipc, t_player *me);
+char game_loop(t_lemipc *s_lemipc, int team_nb);
 char game_start(char *path, int team_nb);
 void clean_ipcs(t_lemipc *lemipc);
 void sighandler(int signum);
@@ -60,5 +60,6 @@ char get_shr_mem_handle(t_lemipc **s_lemipc, char *path);
 char	exit_error(char *msg, char exit_number);
 int  abs(int x);
 char is_nbr(char *str);
+void catch_signals();
 
 #endif //PSU_2016_LEMIPC_CORE_H

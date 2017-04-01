@@ -1,6 +1,7 @@
 #include "core.h"
 
-void debug_players(t_player *players) {
+void    debug_players(t_player *players)
+{
     int i;
     int c;
 

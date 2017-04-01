@@ -1,9 +1,10 @@
 
 #include "core.h"
 
-char init_new_player(t_player **me, int team_id, t_lemipc *lemipc) {
-    t_pos xy_pos;
-    t_player *player;
+char            init_new_player(t_player **me, int team_id, t_lemipc *lemipc)
+{
+    t_pos       xy_pos;
+    t_player    *player;
 
     xy_pos = rand_player_pos(lemipc);
     if (xy_pos.x == -1 && xy_pos.y == -1)
@@ -16,46 +17,38 @@ char init_new_player(t_player **me, int team_id, t_lemipc *lemipc) {
     player->x = xy_pos.x;
     player->y = xy_pos.y;
     *me = player;
-    LOG_MSG("my pos x=%d y=%d\n", player->x, player->y);
     return 1;
 }
 
-char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id) {
+char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id)
+{
     if (lemipc->nbr_players >= MAX_PLAYERS)
         return exit_error("Failed to allocate new player slot\n", 0);
     lemipc->nbr_players++;
-    LOG_MSG("Cur nbr players=%d\n", lemipc->nbr_players);
     return init_new_player(me, team_id, lemipc);
 }
 
-t_player *get_player_in_same_team(t_player *me, t_player *players) {
-    int i;
+t_player    *get_player_in_same_team(t_player *me, t_player *players)
+{
+    int     i;
 
     i = -1;
     while (++i < MAX_PLAYERS) {
         if (players[i].team_id == me->team_id &&
             players[i].is_free == 0 &&
             players[i].pid != me->pid)
-            return &players[i];
+                return &players[i];
     }
     return NULL;
 }
 
-char on_player_leave(t_player *me, t_lemipc *lemipc) {
-    t_player *smne_in_team;
+char            on_player_leave(t_player *me, t_lemipc *lemipc)
+{
+    t_player    *smne_in_team;
 
     if (me == NULL)
         return 0;
     printf("You've been killed\n");
-    LOG_MSG("\non_player_leave\n");
-    LOG_MSG("Cur nbr players=%d\n", lemipc->nbr_players);
-    if (me->is_master) {
-        smne_in_team = get_player_in_same_team(me, &lemipc->players);
-        if (smne_in_team) {
-            LOG_MSG("PID=%d is now the master\n", smne_in_team->pid);
-            smne_in_team->is_master = 1;
-        }
-    }
     init_s_player(me);
     lemipc->nbr_players--;
     if (lemipc->nbr_players <= 0) {
@@ -65,9 +58,10 @@ char on_player_leave(t_player *me, t_lemipc *lemipc) {
     return 1;
 }
 
-t_player *get_player_slot(t_lemipc *lemipc) {
-    int i;
-    int my_pid;
+t_player    *get_player_slot(t_lemipc *lemipc)
+{
+    int     i;
+    int     my_pid;
 
     my_pid = getpid();
     i = -1;
@@ -78,7 +72,8 @@ t_player *get_player_slot(t_lemipc *lemipc) {
     return NULL;
 }
 
-char is_player_master(t_player *players, int team_id) {
+char    is_player_master(t_player *players, int team_id)
+{
     int i;
     int my_pid;
 

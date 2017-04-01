@@ -1,9 +1,9 @@
 #!/bin/bash
 
-nbr_process=$1
 
-for i in `seq 0 $nbr_process`; do
-  team=$((RANDOM % $2))
-  echo $team
-  ./lemipc `pwd` $team > /dev/null 2> /dev/null&
+for i in `seq 0 500`; do
+  team=$((RANDOM % 3))
+  ./lemipc `pwd` $team 2> /dev/null > /dev/null&
 done
+
+LD_LIBRARY_PATH=`pwd` ./gui_cli `pwd`

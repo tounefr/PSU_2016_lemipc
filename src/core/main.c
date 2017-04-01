@@ -12,18 +12,19 @@
 
 t_lemipc *g_lemipc = NULL;
 
-static char usage() {
+static char usage()
+{
     printf("Usage : ./lemipc path_to_key team_number\n\n"
                    "path_to_key is a valid path that will be use by ftok\n"
                    "team_number is the team number assigned to the current player\n");
     return 84;
 }
 
-int main(int ac, char **av) {
+int main(int ac, char **av)
+{
     if (ac != 3 ||
         !strcmp(av[1], "-h") ||
         !is_nbr(av[2]))
         return usage();
-    LOG_MSG("Process id=%d starting\n", getpid());
     return !game_start(av[1], atoi(av[2]));
 }

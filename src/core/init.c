@@ -1,7 +1,8 @@
 
 #include "core.h"
 
-void init_s_player(t_player *player) {
+void init_s_player(t_player *player)
+{
     player->x = -1;
     player->y = -1;
     player->pid = -1;
@@ -10,10 +11,18 @@ void init_s_player(t_player *player) {
     player->is_master = -1;
 }
 
-t_pos init_pos(int x, int y) {
-    t_pos pos;
+t_pos       init_pos(int x, int y)
+{
+    t_pos   pos;
 
     pos.x = x;
     pos.y = y;
     return pos;
+}
+
+void init_dist_cmp(t_dist_cmp *dist_cmp)
+{
+    dist_cmp->min = -1;
+    dist_cmp->dest.x = -1;
+    dist_cmp->dest.y = -1;
 }

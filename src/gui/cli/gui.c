@@ -17,6 +17,7 @@ char display_map(t_lemipc *s_lemipc) {
 
     max = round(sqrt(MAX_PLAYERS));
     y = -1;
+    printf("Nbr players : %d\n", s_lemipc->nbr_players);
     while (++y < max) {
         x = -1;
         while (++x < max) {
@@ -65,7 +66,8 @@ int main(int ac, char **av) {
     g_lemipc = lemipc;
     while (1) {
         display_map(lemipc);
-        sleep(GAME_SLEEP);
+        usleep((GAME_SLEEP * 1000000) / 4);
+//        sleep(GAME_SLEEP / 2);
     }
     return 0;
 }

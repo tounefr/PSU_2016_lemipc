@@ -1,7 +1,8 @@
 
 #include "common.h"
 
-char is_nbr(char *str) {
+char    is_nbr(char *str)
+{
     int i;
     int len;
 
@@ -14,7 +15,8 @@ char is_nbr(char *str) {
     return 1;
 }
 
-int  abs(int x) {
+int  abs(int x)
+{
     if (x < 0)
         return -x;
     return x;

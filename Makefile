@@ -35,6 +35,7 @@ $(GUI_CLI_NAME):
 all: re
 
 re: $(LEMIPC_SHARED_NAME) $(LEMIPC_NAME) $(GUI_CLI_NAME)
+	$(echo "SUCCESS")
 
 fclean:
 	$(MAKE) -C src/core fclean
