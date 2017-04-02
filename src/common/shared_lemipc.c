@@ -20,6 +20,8 @@ char init_s_lemipc(t_lemipc *lemipc, int shm_key)
         return 0;
     lemipc->nbr_players = 0;
     lemipc->shm_key = shm_key;
+    lemipc->game_started = 0;
+    lemipc->team_id_won = -1;
     i = -1;
     while (++i < MAX_PLAYERS)
         init_s_player(&lemipc->players[i]);
@@ -41,7 +43,8 @@ char get_shared_lemipc(t_lemipc **s_lemipc, char *path)
     int shm_key;
     int created;
 
-    key = ftok(path, 0);
+    if (-1 == (key = ftok(path, 0)))
+        return 0;
     created = 0;
     shm_key = shmget(key, sizeof(t_lemipc), SHM_R | SHM_W);
     if (-1 == shm_key) {

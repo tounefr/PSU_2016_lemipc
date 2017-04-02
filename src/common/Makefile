@@ -14,7 +14,7 @@ $(NAME):
 re: $(NAME)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) shared_lemipc.o
 
 fclean: clean
 	$(RM) $(NAME)

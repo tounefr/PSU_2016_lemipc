@@ -71,20 +71,3 @@ t_player    *get_player_slot(t_lemipc *lemipc)
     }
     return NULL;
 }
-
-char    is_player_master(t_player *players, int team_id)
-{
-    int i;
-    int my_pid;
-
-    my_pid = getpid();
-    i = -1;
-    while (++i < MAX_PLAYERS) {
-        if (!players[i].is_free &&
-            players[i].team_id == team_id &&
-            players[i].pid != my_pid)
-            return 0;
-    }
-    return 1;
-}
-

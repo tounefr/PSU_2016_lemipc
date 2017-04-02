@@ -14,13 +14,17 @@ RM =		rm -f
 
 SRCS =		main.c		\
 		    player.c \
+		    player2.c \
 		    movement.c \
 		    signal.c \
 		    init.c \
 		    debug.c \
 		    game.c \
-		    util.c
-
+		    util.c \
+		    pos.c \
+		    pos2.c \
+		    share_mem.c \
+		    ennemy.c
 
 CFLAGS +=	-I ../../include/ -L../../ -llemipc_shared -pthread -lm -ldl
 

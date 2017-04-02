@@ -43,6 +43,11 @@ char    display_map(t_lemipc *s_lemipc)
         printf("\n");
     }
     printf("\n");
+    if (s_lemipc->team_id_won != -1) {
+        printf("Team id %d won !\n", s_lemipc->team_id_won);
+        return 1;
+    }
+    return 0;
 }
 
 
@@ -75,7 +80,8 @@ int             main(int ac, char **av)
         return 0;
     g_lemipc = lemipc;
     while (1) {
-        display_map(lemipc);
-        usleep((GAME_SLEEP * 1000000) / 4);
+        if (display_map(lemipc))
+            return 0;
+        usleep((GAME_SLEEP * 1000000) / 10);
     }
 }

@@ -18,7 +18,8 @@ void            sighandler(int signum)
     exit(0);
 }
 
-void catch_signals() {
+void catch_signals()
+{
     signal(SIGINT, sighandler);
     signal(SIGUSR1, sighandler);
     signal(SIGUSR2, sighandler);

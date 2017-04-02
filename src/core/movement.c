@@ -1,95 +1,42 @@
 
 #include "core.h"
 
-char    is_good_pos(int x, int y)
+void move_forward_check_dest(t_player *me, t_dist_cmp *dist_cmp, t_lemipc *s_lemipc)
 {
-    int max;
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x, me->y - 1), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x + 1, me->y - 1), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x + 1, me->y), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x + 1, me->y + 1), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x, me->y + 1), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x - 1, me->y + 1), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x - 1, me->y), &s_lemipc->players);
+    check_dest_pos(me, dist_cmp,
+                   init_pos(me->x - 1, me->y - 1), &s_lemipc->players);
+}
 
+char            move_forward(t_lemipc *s_lemipc, t_player *me)
+{
+    int         max;
+    t_dist_cmp  dist_cmp;
+
+    if (!me->player_focus)
+        return 0;
     max = round(sqrt(MAX_PLAYERS)) - 1;
-    return (x >= 0 && x <= max && y >= 0 && y <= max);
-}
-
-int calc_dist(int x1, int y1, int x2, int y2)
-{
-    return abs(x2 - x1) + abs(y2 - y1);
-}
-
-char    check_dest_pos(t_player *me,
-                    t_dist_cmp *dist_cmp,
-                    t_pos test_pos,
-                    t_player (*players)[MAX_PLAYERS])
-{
-    int v;
-
-    if (!is_good_pos(test_pos.x, test_pos.y))
-        return -1;
-    v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x, me->player_focus->y);
-    if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
-        return -1;
-    if (dist_cmp->min == -1 || v < dist_cmp->min)
-        dist_cmp->min = v;
-    if (v == dist_cmp->min) {
-        dist_cmp->dest.x = test_pos.x;
-        dist_cmp->dest.y = test_pos.y;
+    init_dist_cmp(&dist_cmp);
+    if (1 != check_dest_pos(me, &dist_cmp, init_pos(me->x, me->y),
+                            &s_lemipc->players))
+        move_forward_check_dest(me, &dist_cmp, s_lemipc);
+    if (dist_cmp.dest.x != -1 && dist_cmp.dest.y != -1) {
+        me->x = dist_cmp.dest.x;
+        me->y = dist_cmp.dest.y;
     }
-    return v;
-}
-
-
-t_pos       rand_player_pos(t_lemipc *lemipc)
-{
-    int     i;
-    int     available_pos;
-    int     rand_nbr;
-    t_pos   rand_pos;
-
-    i = -1;
-    available_pos = 0;
-    rand_pos.x = -1;
-    rand_pos.y = -1;
-    while (++i < MAX_PLAYERS) {
-        if (lemipc->players[i].is_free)
-            available_pos++;
-    }
-    if (available_pos == 0)
-        return rand_pos;
-    rand_nbr = rand() % available_pos;
-    i = -1;
-    available_pos = 0;
-    while (++i < MAX_PLAYERS) {
-        if (lemipc->players[i].is_free)
-            available_pos++;
-        if (available_pos == rand_nbr) {
-            rand_pos = get_xy_pos(i);
-            return rand_pos;
-        }
-    }
-    return rand_pos;
-}
-
-t_player    *has_player_on_this_pos(t_player *players, int x, int y)
-{
-    int     i;
-
-    i = -1;
-    if (!is_good_pos(x, y))
-        return NULL;
-    while (++i < MAX_PLAYERS) {
-        if (!players[i].is_free &&
-            players[i].x == x &&
-            players[i].y == y) {
-            return &players[i];
-        }
-    }
-    return NULL;
-}
-
-t_pos       get_xy_pos(int i)
-{
-    t_pos   pos;
-
-    pos.x = (i % (int)round(sqrt(MAX_PLAYERS)));
-    pos.y = (i / (int)round(sqrt(MAX_PLAYERS)));
-    pos.i = i;
-    return pos;
+    eat_ennemies_around(s_lemipc);
+    return 1;
 }

@@ -54,6 +54,8 @@ typedef struct  s_lemipc
     int         shm_key;
     int         nbr_players;
     t_player    players[MAX_PLAYERS];
+    char        game_started;
+    int         team_id_won;
 }               t_lemipc;
 
 char is_nbr(char *str);
