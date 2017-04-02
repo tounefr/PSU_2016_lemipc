@@ -5,13 +5,14 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Thu Mar 30 10:41:55 2017 linder
-** Last update Sat Apr  1 17:32:30 2017 linder
+** Last update Sun Apr  2 22:41:01 2017 linder
 */
 
 #include "common.h"
 #include "gui_sdl.h"
 
-void		clear_win(int height, int width, SDL_Renderer *renderer, t_rgb *color)
+void		clear_win(int height, int width,
+			  SDL_Renderer *renderer, t_rgb *color)
 {
   int		i;
   int		j;

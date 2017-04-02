@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Wed Mar 29 23:30:25 2017 linder
-** Last update Sun Apr  2 18:16:48 2017 linder
+** Last update Sun Apr  2 22:44:45 2017 linder
 */
 
 #include <stdlib.h>
@@ -35,10 +35,10 @@ void    draw_players(SDL_Renderer *renderer,
 
     i2 = -1;
     while (++i2 < MAX_PLAYERS) {
-        if (!players[i2].is_free && players[i2].team_id != -1) {
-            draw_square(renderer, board, players[i2].x,
-                        players[i2].y, &players[i2].color);
-        }
+      if (!players[i2].is_free && players[i2].team_id != -1) {
+	draw_square(renderer, board, players[i2].x,
+		    players[i2].y, &players[i2].color);
+      }
     }
 }
 
@@ -74,8 +74,8 @@ int                 init(t_board *board, t_lemipc *lemipc)
               board->width, board->height, 0)) == NULL)
         return (84);
     if ((renderer = SDL_CreateRenderer(fenetre, -1,
-          SDL_RENDERER_ACCELERATED |
-          SDL_RENDERER_PRESENTVSYNC)) == NULL)
+				       SDL_RENDERER_ACCELERATED
+				       | SDL_RENDERER_PRESENTVSYNC)) == NULL)
         return (84);
     main_loop(board, lemipc, renderer);
     SDL_DestroyRenderer(renderer);
