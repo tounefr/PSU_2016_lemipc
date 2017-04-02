@@ -7,12 +7,25 @@
 
 t_lemipc *g_lemipc = NULL;
 
-char display_map(t_lemipc *s_lemipc) {
+char    check_player(t_lemipc *s_lemipc, char *c, int *x, int *y)
+{
+    int i2;
+
+    i2 = -1;
+    while (++i2 < MAX_PLAYERS) {
+        if (!s_lemipc->players[i2].is_free &&
+            s_lemipc->players[i2].x == *x &&
+            s_lemipc->players[i2].y == *y &&
+            s_lemipc->players[i2].team_id != -1)
+            *c = s_lemipc->players[i2].team_id + '0';
+    }
+}
+
+char    display_map(t_lemipc *s_lemipc) {
     int max;
     int x;
     int y;
     int i;
-    int i2;
     int c;
 
     max = round(sqrt(MAX_PLAYERS));
@@ -22,15 +35,8 @@ char display_map(t_lemipc *s_lemipc) {
         x = -1;
         while (++x < max) {
             i = (y * max) + x;
-            i2 = -1;
             c = '_';
-            while (++i2 < MAX_PLAYERS) {
-                if (!s_lemipc->players[i2].is_free &&
-                    s_lemipc->players[i2].x == x &&
-                    s_lemipc->players[i2].y == y &&
-                    s_lemipc->players[i2].team_id != -1)
-                    c = s_lemipc->players[i2].team_id + '0';
-            }
+            check_player(s_lemipc, &c, &x, &y);
             printf("%c", c);
         }
         printf("\n");
@@ -39,7 +45,7 @@ char display_map(t_lemipc *s_lemipc) {
 }
 
 
-void sig_handler(int signum) {
+void    sig_handler(int signum) {
     if (g_lemipc) {
         if (g_lemipc->nbr_players <= 0) {
             LOG_MSG("Ending game\n");
@@ -49,13 +55,13 @@ void sig_handler(int signum) {
     exit(0);
 }
 
-char usage() {
+char    usage() {
     fprintf(stderr, "Usage: ./gui path\n");
     return 1;
 }
 
-int main(int ac, char **av) {
-    t_lemipc *lemipc;
+int             main(int ac, char **av) {
+    t_lemipc    *lemipc;
 
     if (ac != 2)
         return usage();
@@ -67,7 +73,5 @@ int main(int ac, char **av) {
     while (1) {
         display_map(lemipc);
         usleep((GAME_SLEEP * 1000000) / 4);
-//        sleep(GAME_SLEEP / 2);
     }
-    return 0;
 }
