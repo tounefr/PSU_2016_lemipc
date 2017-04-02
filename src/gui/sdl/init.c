@@ -21,7 +21,6 @@ void draw_square(SDL_Renderer *renderer, t_board *board, int x, int y, t_rgb *co
     int i;
     int j;
 
-    printf("%d %d %d\n", color->r, color->g, color->b);
     SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, 255);
     i = (x - 1) * board->step;
     while (i < (board->step + (x - 1) * board->step)) {
@@ -90,9 +89,8 @@ void clear_screen(SDL_Renderer *renderer)
     rect.y = 0;
     rect.w = WIN_WIDTH;
     rect.h = WIN_HEIGHT;
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &rect);
-//    clear_win(board->height, board->width, renderer, color_rgb);
 }
 
 
@@ -152,11 +150,12 @@ int init(t_board *board, t_lemipc *lemipc) {
         if (event.type == SDL_QUIT)
             break;
         clear_screen(renderer);
-        SDL_RenderPresent(renderer);
         draw_grille(renderer, board);
-        SDL_RenderPresent(renderer);
+      // SDL_RenderPresent(renderer);
+
         draw_players(renderer, board, lemipc->players);
         SDL_RenderPresent(renderer);
+
         SDL_Delay(100);
     }
 

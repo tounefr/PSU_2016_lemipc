@@ -32,7 +32,7 @@
 #define LOG_MSG(...)
 #endif
 
-#define MAX_PLAYERS 1000
+#define MAX_PLAYERS 100
 #define WIN_WIDTH 500
 #define WIN_HEIGHT 500
 #define GAME_SLEEP 1
