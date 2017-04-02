@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Thu Mar 30 10:07:42 2017 linder
-** Last update Thu Mar 30 16:44:42 2017 linder
+** Last update Sun Apr  2 13:21:59 2017 linder
 */
 
 #ifndef _GUI_H_
@@ -51,5 +51,6 @@ void		clear_win(int, int, SDL_Renderer *, t_rgb *);
 
 int		check_nbr(int, int);
 void		catch_signals();
+int		need_quit();
 
 #endif /* !_GUI_H_ */

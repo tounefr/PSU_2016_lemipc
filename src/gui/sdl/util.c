@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Thu Mar 30 14:31:18 2017 linder
-** Last update Sat Apr  1 17:33:17 2017 linder
+** Last update Sun Apr  2 14:40:27 2017 linder
 */
 
 #include <signal.h>
@@ -42,4 +42,22 @@ static void	sighandler(int signum)
 void		catch_signals()
 {
   signal(SIGINT, sighandler);
+}
+
+int		need_quit()
+{
+  SDL_Event	event;
+
+  SDL_WaitEvent(&event);
+  if (event.type == SDL_QUIT)
+    {
+      printf("End : SDL QUIT\n");
+      return (1);
+    }
+  if (event.key.keysym.sym == SDLK_ESCAPE)
+    {
+      printf("End : ESCAPE\n");
+      return (1);
+    }
+  return (0);
 }
