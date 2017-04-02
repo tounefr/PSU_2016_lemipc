@@ -27,3 +27,55 @@ void		clear_win(int height, int width, SDL_Renderer *renderer, t_rgb *color)
   SDL_RenderPresent(renderer);
   SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, 255);
 }
+
+void    draw_square(SDL_Renderer *renderer,
+                 t_board *board,
+                 int x, int y, t_rgb *color)
+{
+  int   i;
+  int   j;
+
+  SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, 255);
+  i = (x - 1) * board->step;
+  while (i < (board->step + (x - 1) * board->step)) {
+    j = (y - 1) * board->step;
+    while (j < (board->step + (y - 1) * board->step))
+      SDL_RenderDrawPoint(renderer, i, j++);
+    i++;
+  }
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+}
+
+void    draw_grille(SDL_Renderer *renderer, t_board *board)
+{
+  int   i;
+  int   j;
+  int   k;
+  int   step;
+
+  step = check_nbr(sqrt(board->nb_case), board->height);
+  k = step;
+  while (k < board->width) {
+    i = 0;
+    while (i < board->height)
+      SDL_RenderDrawPoint(renderer, k, i++);
+    k += step;
+  }
+  k = step;
+  while (k < board->height) {
+    j = 0;
+    while (j < board->width)
+      SDL_RenderDrawPoint(renderer, j++, k);
+    k += step;
+  }
+  board->step = step;
+  board->final_case_nb = (k / step);
+}
+
+char on_event_exit(SDL_Event *event)
+{
+  if (event->type == SDL_QUIT ||
+      event->key.keysym.sym == SDLK_ESCAPE)
+    return (1);
+  return (0);
+}

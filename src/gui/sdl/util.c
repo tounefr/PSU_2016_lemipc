@@ -36,7 +36,6 @@ int		check_nbr(int nbr, int size)
 
 void	sighandler(int signum)
 {
-    g_running = 0;
     exit(0);
 }
 

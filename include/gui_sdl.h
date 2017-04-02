@@ -25,8 +25,6 @@ typedef struct	s_board
   char		*name;
 }		t_board;
 
-extern char g_running;
-
 /*
 *** clear_win.c
 */
@@ -40,5 +38,9 @@ void		clear_win(int, int, SDL_Renderer *, t_rgb *);
 int		check_nbr(int, int);
 void		catch_signals();
 int		need_quit();
+void draw_grille(SDL_Renderer *renderer, t_board *board);
+void draw_square(SDL_Renderer *renderer,
+                 t_board *board,
+                 int x, int y, t_rgb *color);
 
 #endif /* !_GUI_H_ */
