@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Wed Mar 29 23:30:25 2017 linder
-** Last update Sun Apr  2 18:01:51 2017 linder
+** Last update Sun Apr  2 18:03:14 2017 linder
 */
 
 #include <stdlib.h>
@@ -16,7 +16,7 @@
 
 t_lemipc	*g_lemipc = NULL;
 
-void		draw_square(SDL_Renderer *renderer, t_board *board, int x, int y, t_rgb color)
+void		draw_square(SDL_Renderer *renderer, t_board *board, int x, int y, t_rgb *color)
 {
   int           i;
   int           j;
@@ -110,7 +110,7 @@ int		init(t_board *board, t_rgb *color_rgb, t_lemipc *lemipc)
 	      clear_win(board->height, board->width, renderer, color_rgb);
 	      draw_grille(renderer, board);
 	      if (check_player(lemipc, &x, &y) == 1)
-		draw_square(renderer, board, x, y, lemipc->players->color);
+		draw_square(renderer, board, x, y, &lemipc->players->color);
 	    }
 	}
       SDL_Delay(1000);
