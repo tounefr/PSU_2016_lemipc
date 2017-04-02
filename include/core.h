@@ -83,7 +83,8 @@ char count_ennemies_around(t_player players[MAX_PLAYERS],
                            t_player *player);
 
 t_player *has_player_on_this_pos(t_player *players, int x, int y);
-char check_ennemy_on_this_pos(t_player players[MAX_PLAYERS], t_player *player, int x, int y);
+char check_ennemy_on_this_pos(t_player players[MAX_PLAYERS],
+    t_player *player, int x, int y);
 char get_shr_mem_handle(t_lemipc **s_lemipc, char *path);
 
 char exit_error(char *msg, char exit_number);
