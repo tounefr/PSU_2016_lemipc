@@ -14,141 +14,177 @@
 #include "common.h"
 #include "gui_sdl.h"
 
-t_lemipc	*g_lemipc = NULL;
+t_lemipc *g_lemipc = NULL;
+char g_running = 1;
 
-void		draw_square(SDL_Renderer *renderer, t_board *board, int x, int y, t_rgb *color)
-{
-  int           i;
-  int           j;
+void draw_square(SDL_Renderer *renderer, t_board *board, int x, int y, t_rgb *color) {
+    int i;
+    int j;
 
-  SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, 255);
-  i = (x-1) * board->step;
-  while (i < (board->step + (x-1) * board->step))
-    {
-      j = (y-1) * board->step;
-      while (j < (board->step + (y-1) * board->step))
-	SDL_RenderDrawPoint(renderer, i, j++);
-      i++;
+    printf("%d %d %d\n", color->r, color->g, color->b);
+    SDL_SetRenderDrawColor(renderer, color->r, color->g, color->b, 255);
+    i = (x - 1) * board->step;
+    while (i < (board->step + (x - 1) * board->step)) {
+        j = (y - 1) * board->step;
+        while (j < (board->step + (y - 1) * board->step))
+            SDL_RenderDrawPoint(renderer, i, j++);
+        i++;
     }
-  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-  SDL_RenderPresent(renderer);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 }
 
-void		draw_grille(SDL_Renderer *renderer, t_board *board)
-{
-  int		i;
-  int		j;
-  int		k;
-  int		step;
+void draw_grille(SDL_Renderer *renderer, t_board *board) {
+    int i;
+    int j;
+    int k;
+    int step;
 
-  printf("start\n");
-  step = check_nbr(sqrt(board->nb_case), board->height);
-  k = step;
-  while (k < board->width)
-    {
-      i = 0;
-      while (i < board->height)
-	SDL_RenderDrawPoint(renderer, k, i++);
-      k += step;
+    step = check_nbr(sqrt(board->nb_case), board->height);
+    k = step;
+    while (k < board->width) {
+        i = 0;
+        while (i < board->height)
+            SDL_RenderDrawPoint(renderer, k, i++);
+        k += step;
     }
-  k = step;
-  while (k < board->height)
-    {
-      j = 0;
-      while (j < board->width)
-	SDL_RenderDrawPoint(renderer, j++, k);
-      k += step;
+    k = step;
+    while (k < board->height) {
+        j = 0;
+        while (j < board->width)
+            SDL_RenderDrawPoint(renderer, j++, k);
+        k += step;
     }
-  SDL_RenderPresent(renderer);
-  board->step = step;
-  board->final_case_nb = (k / step);
-  printf("end\n");
+    board->step = step;
+    board->final_case_nb = (k / step);
 }
 
-int		check_player(t_lemipc *s_lemipc, int *x, int *y)
-{
-  int i2;
+/*
+int check_player(t_lemipc *s_lemipc, int *x, int *y) {
+    int i2;
 
-  i2 = -1;
-  while (++i2 < MAX_PLAYERS) {
-    if (!s_lemipc->players[i2].is_free &&
-	s_lemipc->players[i2].x == *x &&
-	s_lemipc->players[i2].y == *y &&
-	s_lemipc->players[i2].team_id != -1)
-      return (1);
-  }
-  return (0);
+    i2 = -1;
+    while (++i2 < MAX_PLAYERS) {
+        if (!s_lemipc->players[i2].is_free &&
+            s_lemipc->players[i2].x == *x &&
+            s_lemipc->players[i2].y == *y &&
+            s_lemipc->players[i2].team_id != -1)
+            return (1);
+    }
+    return (0);
+}
+ */
+
+char on_event_exit(SDL_Event *event)
+{
+    if (event->type == SDL_QUIT ||
+        event->key.keysym.sym == SDLK_ESCAPE)
+        return (1);
+    return (0);
+}
+
+void clear_screen(SDL_Renderer *renderer)
+{
+    SDL_Rect rect;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = WIN_WIDTH;
+    rect.h = WIN_HEIGHT;
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, &rect);
+//    clear_win(board->height, board->width, renderer, color_rgb);
 }
 
 
-int		init(t_board *board, t_rgb *color_rgb, t_lemipc *lemipc)
+void draw_players(SDL_Renderer *renderer, t_board *board, t_player players[MAX_PLAYERS])
 {
-  SDL_Window	*fenetre;
-  SDL_Renderer	*renderer;
-  int		y;
-  int		x;
+    int i2;
 
-  if (SDL_VideoInit(NULL) < 0)
-    return (84);
-  if ((fenetre = SDL_CreateWindow(board->name, SDL_WINDOWPOS_CENTERED,
-				  SDL_WINDOWPOS_CENTERED, board->width, board->height, 0)) == NULL)
-    return (84);
-  if ((renderer = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_ACCELERATED |
-				     SDL_RENDERER_PRESENTVSYNC)) == NULL)
-    return (84);
-  while (1)
-    {
-      printf("START_INIT\n");
-      if ((need_quit()) == 1)
-	return (0);
-      while (y++ < round(sqrt(MAX_PLAYERS)))
-	{
-	  while (x++ < round(sqrt(MAX_PLAYERS)))
-	    {
-	      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-	      SDL_RenderClear(renderer);
-	      clear_win(board->height, board->width, renderer, color_rgb);
-	      draw_grille(renderer, board);
-	      if (check_player(lemipc, &x, &y) == 1)
-		{
-		  draw_square(renderer, board, x, y, &lemipc->players->color);
-		  printf("%d %d\n", x, y);
-		}
-	    }
-	}
-      SDL_Delay(1000);
-      printf("refreshed\n");
-  }
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(fenetre);
-  SDL_Quit();
-  return (0);
+    i2 = -1;
+    while (++i2 < MAX_PLAYERS) {
+        if (!players[i2].is_free && players[i2].team_id != -1) {
+            draw_square(renderer, board, players[i2].x, players[i2].y, &players[i2].color);
+        }
+    }
 }
 
-int		main(int ac, char **av)
-{
-  t_rgb		color_rgb;
-  t_board	board;
-  t_lemipc	*lemipc;
+int init(t_board *board, t_lemipc *lemipc) {
+    SDL_Window *fenetre;
+    SDL_Renderer *renderer;
+    int y;
+    int x;
+    SDL_Event	event;
 
-  printf("START\n");
-  if (ac != 2)
-    {
-      fprintf(stderr, "Usage: ./gui path\n");
-      return (1);
+
+    if (SDL_VideoInit(NULL) < 0)
+        return (84);
+    if ((fenetre = SDL_CreateWindow(board->name, SDL_WINDOWPOS_CENTERED,
+                                    SDL_WINDOWPOS_CENTERED, board->width, board->height, 0)) == NULL)
+        return (84);
+    if ((renderer = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_ACCELERATED |
+                                                    SDL_RENDERER_PRESENTVSYNC)) == NULL)
+        return (84);
+
+    /*
+    while (g_running) {
+        SDL_WaitEvent(&event);
+        if (on_event_exit(&event))
+            break;
+        clear_screen(renderer);
+
+        while (y++ < round(sqrt(MAX_PLAYERS))) {
+            while (x++ < round(sqrt(MAX_PLAYERS))) {
+                draw_grille(renderer, board);
+                if (check_player(lemipc, &x, &y) == 1) {
+                    draw_square(renderer, board, x, y, &lemipc->players->color);
+                    printf("%d %d\n", x, y);
+                }
+            }
+        }
+        SDL_RenderPresent(renderer);
+        SDL_Delay(1000);
+        printf("refreshed\n");
     }
-  srand(time(NULL));
-  catch_signals();
-  if (!get_shared_lemipc(&lemipc, av[1]))
-    {
-      fprintf(stderr, "Error get shared lemipc\n");
-      return (0);
+     */
+
+    while (1) {
+        SDL_PollEvent(&event);
+        if (event.type == SDL_QUIT)
+            break;
+        clear_screen(renderer);
+        SDL_RenderPresent(renderer);
+        draw_grille(renderer, board);
+        SDL_RenderPresent(renderer);
+        draw_players(renderer, board, lemipc->players);
+        SDL_RenderPresent(renderer);
     }
-  g_lemipc = lemipc;
-  board.height = 400;
-  board.width = 400;
-  board.nb_case = 56;
-  board.name = "LEMIPC";
-  init(&board, &color_rgb, lemipc);
-  return (0);
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(fenetre);
+    SDL_Quit();
+    return (0);
+}
+
+int main(int ac, char **av) {
+    t_board board;
+    t_lemipc *lemipc;
+
+    printf("START\n");
+    if (ac != 2) {
+        fprintf(stderr, "Usage: ./gui path\n");
+        return (1);
+    }
+    srand(time(NULL));
+    catch_signals();
+    if (!get_shared_lemipc(&lemipc, av[1])) {
+        fprintf(stderr, "Error get shared lemipc\n");
+        return (0);
+    }
+    g_lemipc = lemipc;
+    board.height = WIN_HEIGHT;
+    board.width = WIN_WIDTH;
+    board.nb_case = MAX_PLAYERS;
+    board.name = "LEMIPC";
+    init(&board, lemipc);
+    return (0);
 }

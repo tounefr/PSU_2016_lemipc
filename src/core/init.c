@@ -20,9 +20,7 @@ t_pos       init_pos(int x, int y)
     return pos;
 }
 
-t_rgb       init_rgb(unsigned char r,
-                     unsigned char g,
-                     unsigned char b)
+t_rgb       init_rgb(int r, int g, int b)
 {
     t_rgb   rgb;
 

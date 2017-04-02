@@ -43,5 +43,5 @@ t_rgb   get_player_color(t_player players[MAX_PLAYERS], int team_id)
         if (!players[i].is_free && team_id == players[i].team_id)
             return players[i].color;
     }
-    return init_rgb(rand() % 200, rand() % 200, rand() % 200);
+    return init_rgb(rand_nbr(0, 200), rand_nbr(0, 200), rand_nbr(0, 200));
 }

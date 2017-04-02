@@ -10,13 +10,13 @@ char            init_new_player(t_player **me, int team_id, t_lemipc *lemipc)
     if (xy_pos.x == -1 && xy_pos.y == -1)
         return 0;
     player = &lemipc->players[xy_pos.i];
+    player->color = get_player_color(lemipc->players, team_id);
     player->is_free = 0;
     player->pid = getpid();
     player->team_id = team_id;
     player->is_master = is_player_master(lemipc->players, team_id);
     player->x = xy_pos.x;
     player->y = xy_pos.y;
-    player->color = get_player_color(lemipc->players, team_id);
     *me = player;
     return 1;
 }

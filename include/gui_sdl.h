@@ -25,6 +25,8 @@ typedef struct	s_board
   char		*name;
 }		t_board;
 
+extern char g_running;
+
 /*
 *** clear_win.c
 */

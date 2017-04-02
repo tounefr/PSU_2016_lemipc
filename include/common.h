@@ -33,14 +33,16 @@
 #endif
 
 #define MAX_PLAYERS 1000
+#define WIN_WIDTH 500
+#define WIN_HEIGHT 500
 #define GAME_SLEEP 1
 #define SHARED_MEM_LIBRARY "./liblemipc_shared.so"
 
 typedef struct      s_rgb
 {
-    unsigned char   r;
-    unsigned char	g;
-    unsigned char	b;
+    int             r;
+    int	            g;
+    int	            b;
 }		            t_rgb;
 
 typedef struct s_player

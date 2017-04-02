@@ -34,31 +34,13 @@ int		check_nbr(int nbr, int size)
   return (ret);
 }
 
-static void	sighandler(int signum)
+void	sighandler(int signum)
 {
-  printf("\n");
-  exit(0);
+    g_running = 0;
+    exit(0);
 }
 
 void		catch_signals()
 {
   signal(SIGINT, sighandler);
-}
-
-int		need_quit()
-{
-  SDL_Event	event;
-
-  SDL_WaitEvent(&event);
-  if (event.type == SDL_QUIT)
-    {
-      printf("End : SDL QUIT\n");
-      return (1);
-    }
-  if (event.key.keysym.sym == SDLK_ESCAPE)
-    {
-      printf("End : ESCAPE\n");
-      return (1);
-    }
-  return (0);
 }

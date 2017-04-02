@@ -30,3 +30,8 @@ char	exit_error(char *msg, char exit_number)
         fprintf(stderr, "%s\n", msg);
     return (exit_number);
 }
+
+int rand_nbr(int min, int max)
+{
+    return (rand() % max) + min;
+}
