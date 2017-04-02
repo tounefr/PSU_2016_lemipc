@@ -5,7 +5,7 @@
 ## Login   <linder@epitech.net>
 ## 
 ## Started on  Tue Mar 28 10:55:35 2017 linder
-## Last update Thu Mar 30 16:36:16 2017 linder
+## Last update Sat Apr  1 17:33:32 2017 linder
 ##
 
 CC =		gcc
@@ -19,7 +19,7 @@ SRCS =		init.c		\
 
 OBJS =		$(SRCS:.c=.o)
 
-CFLAGS =	-lSDL2 -lm -I./include
+CFLAGS =	-lSDL2 -lm -I../../../include
 
 
 NAME =		graph

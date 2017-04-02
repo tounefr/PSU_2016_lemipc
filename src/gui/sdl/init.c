@@ -5,13 +5,14 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Wed Mar 29 23:30:25 2017 linder
-** Last update Thu Mar 30 17:59:47 2017 linder
+** Last update Sun Apr  2 12:27:24 2017 linder
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "gui.h"
+#include "gui_sdl.h"
+#include "common.h"
 
 void		draw_grille(SDL_Renderer *renderer, t_board *board)
 {
@@ -47,25 +48,22 @@ int		init(t_board *board, t_rgb *color_rgb)
   SDL_Window	*fenetre;
   SDL_Renderer	*renderer;
 
-  while (42)
-    {
-      if (SDL_VideoInit(NULL) < 0)
-	return (84);
-      if ((fenetre = SDL_CreateWindow(board->name, SDL_WINDOWPOS_CENTERED,
-				      SDL_WINDOWPOS_CENTERED, board->width, board->height , 0)) == NULL)
-	return (84);
-      if ((renderer = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_ACCELERATED |
+if (SDL_VideoInit(NULL) < 0)
+    return (84);
+if ((fenetre = SDL_CreateWindow(board->name, SDL_WINDOWPOS_CENTERED,
+				    SDL_WINDOWPOS_CENTERED, board->width, board->height , 0)) == NULL)
+    return (84);
+ if ((renderer = SDL_CreateRenderer(fenetre, -1, SDL_RENDERER_ACCELERATED |
 					 SDL_RENDERER_PRESENTVSYNC)) == NULL)
-	return (84);      
-      SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-      SDL_RenderClear(renderer);
-      SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-      draw_grille(renderer, board);
-      SDL_Delay(10000000);
-      SDL_DestroyRenderer(renderer);
-      SDL_DestroyWindow(fenetre);
-      SDL_Quit();
-    }
+    return (84);
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  draw_grille(renderer, board);
+  SDL_Delay(10000000);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(fenetre);
+  SDL_Quit();
   return (0);
 }
 
@@ -78,7 +76,7 @@ int		main()
   catch_signals();
   board.height = 400;
   board.width = 400;
-  board.nb_case = 100;
+  board.nb_case = 56;
   board.name = "Mon board";
   set_rgb(&color_rgb, "black");
   if ((init(&board, &color_rgb)) != 0)

@@ -5,13 +5,13 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Thu Mar 30 10:27:56 2017 linder
-** Last update Thu Mar 30 10:48:09 2017 linder
+** Last update Sat Apr  1 17:33:09 2017 linder
 */
 
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include "gui.h"
+#include "gui_sdl.h"
 
 void            rand_rgb(t_rgb *color)
 {

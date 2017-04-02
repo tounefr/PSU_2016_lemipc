@@ -5,13 +5,13 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Thu Mar 30 14:31:18 2017 linder
-** Last update Thu Mar 30 16:39:47 2017 linder
+** Last update Sat Apr  1 17:33:17 2017 linder
 */
 
 #include <signal.h>
 #include <math.h>
 #include <stdbool.h>
-#include "gui.h"
+#include "gui_sdl.h"
 
 int		check_nbr(int nbr, int size)
 {
@@ -35,18 +35,11 @@ int		check_nbr(int nbr, int size)
 
 static void	sighandler(int signum)
 {
-  if (signum == SIGINT)
-    {
-      printf("\n");
-      exit(0);
-    }
+  printf("\n");
+  exit(0);
 }
 
 void		catch_signals()
 {
-  int		i;
-
-  i = -1;
-  while (++i < MAX_SIG)
-    signal(i, sighandler);
+  signal(SIGINT, sighandler);
 }
