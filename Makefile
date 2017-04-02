@@ -16,6 +16,8 @@ GUI_SDL_NAME = gui_sdl
 
 GUI_CLI_NAME = gui_cli
 
+all: re
+
 $(LEMIPC_NAME):
 	$(MAKE) -C src/core/ re
 	mv src/core/a.out ./$(LEMIPC_NAME)
@@ -31,8 +33,6 @@ $(GUI_SDL_NAME):
 $(GUI_CLI_NAME):
 	$(MAKE) -C src/gui/cli re
 	mv src/gui/cli/a.out ./$(GUI_CLI_NAME)
-
-all: re
 
 re: $(LEMIPC_SHARED_NAME) $(LEMIPC_NAME) $(GUI_CLI_NAME) $(GUI_SDL_NAME)
 	$(echo "SUCCESS")
