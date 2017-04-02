@@ -7,7 +7,7 @@
 
 t_lemipc *g_lemipc = NULL;
 
-char    check_player(t_lemipc *s_lemipc, int *c, int *x, int *y)
+void    check_player(t_lemipc *s_lemipc, int *c, int *x, int *y)
 {
     int i2;
 
@@ -26,7 +26,6 @@ char    display_map(t_lemipc *s_lemipc)
     int max;
     int x;
     int y;
-    int i;
     int c;
 
     max = round(sqrt(MAX_PLAYERS));
@@ -35,7 +34,6 @@ char    display_map(t_lemipc *s_lemipc)
     while (++y < max) {
         x = -1;
         while (++x < max) {
-            i = (y * max) + x;
             c = '_';
             check_player(s_lemipc, &c, &x, &y);
             printf("%c", c);
@@ -53,6 +51,7 @@ char    display_map(t_lemipc *s_lemipc)
 
 void    sig_handler(int signum)
 {
+    signum = signum;
     if (g_lemipc) {
         if (g_lemipc->nbr_players <= 0) {
             LOG_MSG("Ending game\n");

@@ -11,6 +11,6 @@
 
 extern t_lemipc *g_lemipc;
 
-char    check_player(t_lemipc *s_lemipc, int *c, int *x, int *y);
+void    check_player(t_lemipc *s_lemipc, int *c, int *x, int *y);
 
 #endif //PSU_2016_LEMIPC_GUI_CLI_H

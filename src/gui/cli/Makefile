@@ -7,7 +7,7 @@ CC = gcc
 
 SRCS =  gui.c
 
-CFLAGS += -I ../../../include/ -L../../../ -llemipc_shared -pthread -lm -ldl
+CFLAGS += -I ../../../include/ -L../../../ -llemipc_shared -pthread -lm -ldl -Wall -Wextra
 
 OBJS = $(SRCS:.c=.o)
 
