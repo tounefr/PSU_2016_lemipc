@@ -157,6 +157,7 @@ int init(t_board *board, t_lemipc *lemipc) {
         SDL_RenderPresent(renderer);
         draw_players(renderer, board, lemipc->players);
         SDL_RenderPresent(renderer);
+        SDL_Delay(100);
     }
 
     SDL_DestroyRenderer(renderer);
