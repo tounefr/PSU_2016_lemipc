@@ -5,7 +5,7 @@
 ** Login   <linder@epitech.net>
 ** 
 ** Started on  Wed Mar 29 23:30:25 2017 linder
-** Last update Sun Apr  2 18:03:14 2017 linder
+** Last update Sun Apr  2 18:16:48 2017 linder
 */
 
 #include <stdlib.h>
@@ -110,7 +110,10 @@ int		init(t_board *board, t_rgb *color_rgb, t_lemipc *lemipc)
 	      clear_win(board->height, board->width, renderer, color_rgb);
 	      draw_grille(renderer, board);
 	      if (check_player(lemipc, &x, &y) == 1)
-		draw_square(renderer, board, x, y, &lemipc->players->color);
+		{
+		  draw_square(renderer, board, x, y, &lemipc->players->color);
+		  printf("%d %d\n", x, y);
+		}
 	    }
 	}
       SDL_Delay(1000);
