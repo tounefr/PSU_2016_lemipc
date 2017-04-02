@@ -1,86 +1,95 @@
+/*
+** pos.c for  in /home/linder/PSU_2016_lemipc/src/core
+** 
+** Made by linder
+** Login   <linder@epitech.net>
+** 
+** Started on  Sun Apr  2 18:52:14 2017 linder
+** Last update Sun Apr  2 19:10:23 2017 linder
+*/
 
 #include "core.h"
 
-char    is_good_pos(int x, int y)
+char	is_good_pos(int x, int y)
 {
-    int max;
+  int	max;
 
-    max = round(sqrt(MAX_PLAYERS)) - 1;
-    return (x >= 0 && x <= max && y >= 0 && y <= max);
+  max = round(sqrt(MAX_PLAYERS)) - 1;
+  return (x >= 0 && x <= max && y >= 0 && y <= max);
 }
 
-int calc_dist(int x1, int y1, int x2, int y2)
+int	calc_dist(int x1, int y1, int x2, int y2)
 {
-    return abs(x2 - x1) + abs(y2 - y1);
+  return (abs(x2 - x1) + abs(y2 - y1));
 }
 
-char    check_dest_pos(t_player *me,
+char	check_dest_pos(t_player *me,
                        t_dist_cmp *dist_cmp,
                        t_pos test_pos,
                        t_player players[MAX_PLAYERS])
 {
-    int v;
+  int	v;
 
-    if (!is_good_pos(test_pos.x, test_pos.y))
-        return -1;
-    v = calc_dist(test_pos.x, test_pos.y,
-                  me->player_focus->x,
-                  me->player_focus->y);
-    if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
-        return -1;
-    if (dist_cmp->min == -1 || v < dist_cmp->min)
-        dist_cmp->min = v;
-    if (v == dist_cmp->min) {
-        dist_cmp->dest.x = test_pos.x;
-        dist_cmp->dest.y = test_pos.y;
+  if (!is_good_pos(test_pos.x, test_pos.y))
+    return (-1);
+  v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x,
+		me->player_focus->y);
+  if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
+    return (-1);
+  if (dist_cmp->min == -1 || v < dist_cmp->min)
+    dist_cmp->min = v;
+  if (v == dist_cmp->min)
+    {
+      dist_cmp->dest.x = test_pos.x;
+      dist_cmp->dest.y = test_pos.y;
     }
-    return v;
+  return (v);
 }
 
-
-t_pos       rand_player_pos(t_lemipc *lemipc)
+t_pos	rand_player_pos(t_lemipc *lemipc)
 {
-    int     i;
-    int     available_pos;
-    int     rand_nbr;
-    t_pos   rand_pos;
+  int	i;
+  int	available_pos;
+  int	rand_nbr;
+  t_pos	rand_pos;
 
-    i = -1;
-    available_pos = 0;
-    rand_pos = init_pos(-1, -1);
-    while (++i < MAX_PLAYERS) {
-        if (lemipc->players[i].is_free)
-            available_pos++;
+  i = -1;
+  available_pos = 0;
+  rand_pos = init_pos(-1, -1);
+  while (++i < MAX_PLAYERS)
+    if (lemipc->players[i].is_free)
+      available_pos++;
+  if (available_pos == 0)
+    return (rand_pos);
+  rand_nbr = rand() % available_pos;
+  i = -1;
+  available_pos = 0;
+  while (++i < MAX_PLAYERS) {
+    if (lemipc->players[i].is_free)
+      available_pos++;
+    if (available_pos == rand_nbr) {
+      rand_pos = get_xy_pos(i);
+      return (rand_pos);
     }
-    if (available_pos == 0)
-        return rand_pos;
-    rand_nbr = rand() % available_pos;
-    i = -1;
-    available_pos = 0;
-    while (++i < MAX_PLAYERS) {
-        if (lemipc->players[i].is_free)
-            available_pos++;
-        if (available_pos == rand_nbr) {
-            rand_pos = get_xy_pos(i);
-            return rand_pos;
-        }
-    }
-    return rand_pos;
+  }
+  return (rand_pos);
 }
 
-t_player    *has_player_on_this_pos(t_player *players, int x, int y)
+t_player	*has_player_on_this_pos(t_player *players, int x, int y)
 {
-    int i;
+  int	i;
 
-    i = -1;
-    if (!is_good_pos(x, y))
-        return NULL;
-    while (++i < MAX_PLAYERS) {
-        if (!players[i].is_free &&
-            players[i].x == x &&
-            players[i].y == y) {
-            return &players[i];
-        }
-    }
+  i = -1;
+  if (!is_good_pos(x, y))
     return NULL;
+  while (++i < MAX_PLAYERS)
+    {
+      if (!players[i].is_free &&
+	  players[i].x == x &&
+	  players[i].y == y)
+	{
+	  return (&players[i]);
+        }
+    }
+  return (NULL);
 }

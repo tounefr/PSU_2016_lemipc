@@ -1,6 +1,12 @@
-//
-// Created by thomas on 01/04/17.
-//
+/*
+** core.h for  in /home/linder/PSU_2016_lemipc/include
+** 
+** Made by linder
+** Login   <linder@epitech.net>
+** 
+** Started on  Sun Apr  2 19:04:50 2017 linder
+** Last update Sun Apr  2 19:05:06 2017 linder
+*/
 
 #ifndef PSU_2016_LEMIPC_CORE_H
 #define PSU_2016_LEMIPC_CORE_H
@@ -77,10 +83,7 @@ char count_ennemies_around(t_player players[MAX_PLAYERS],
                            t_player *player);
 
 t_player *has_player_on_this_pos(t_player *players, int x, int y);
-
-char check_ennemy_on_this_pos(t_player players[MAX_PLAYERS],
-                              t_player *player, int x, int y);
-
+char check_ennemy_on_this_pos(t_player players[MAX_PLAYERS], t_player *player, int x, int y);
 char get_shr_mem_handle(t_lemipc **s_lemipc, char *path);
 
 char exit_error(char *msg, char exit_number);
