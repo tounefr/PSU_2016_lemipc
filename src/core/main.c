@@ -16,7 +16,8 @@ static char usage()
 {
     printf("Usage : ./lemipc path_to_key team_number\n\n"
                    "path_to_key is a valid path that will be use by ftok\n"
-                   "team_number is the team number assigned to the current player\n");
+                   "team_number is the team number "
+                    "assigned to the current player\n");
     return 84;
 }
 

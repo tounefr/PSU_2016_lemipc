@@ -23,7 +23,9 @@ char    check_dest_pos(t_player *me,
 
     if (!is_good_pos(test_pos.x, test_pos.y))
         return -1;
-    v = calc_dist(test_pos.x, test_pos.y, me->player_focus->x, me->player_focus->y);
+    v = calc_dist(test_pos.x, test_pos.y,
+                  me->player_focus->x,
+                  me->player_focus->y);
     if (NULL != has_player_on_this_pos(players, test_pos.x, test_pos.y))
         return -1;
     if (dist_cmp->min == -1 || v < dist_cmp->min)

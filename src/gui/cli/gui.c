@@ -48,7 +48,6 @@ char    display_map(t_lemipc *s_lemipc)
     return 0;
 }
 
-
 void    sig_handler(int signum)
 {
     signum = signum;

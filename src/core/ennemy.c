@@ -80,7 +80,8 @@ void    eat_ennemies_around(t_lemipc *s_lemipc)
     while (++i < MAX_PLAYERS) {
         if (s_lemipc->players[i].pid != -1 &&
             s_lemipc->players[i].is_free == 0) {
-            if (has_more_than_2_ennemies_around(s_lemipc->players, &s_lemipc->players[i]))
+            if (has_more_than_2_ennemies_around(s_lemipc->players,
+                                                &s_lemipc->players[i]))
                 kill_player(s_lemipc, &s_lemipc->players[i]);
         }
     }
