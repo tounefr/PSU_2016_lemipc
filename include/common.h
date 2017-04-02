@@ -60,5 +60,8 @@ char is_nbr(char *str);
 int  abs(int x);
 char	exit_error(char *msg, char exit_number);
 char get_shared_lemipc(t_lemipc **s_lemipc, char *path);
+void init_s_player(t_player *player);
+char init_s_lemipc(t_lemipc *lemipc, int shm_key);
+void clean_ipcs(t_lemipc *lemipc);
 
 #endif /* !_LEMIPC_H_ */

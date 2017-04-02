@@ -8,7 +8,7 @@ CC = gcc
 SRCS =  gui.c
 
 CFLAGS += -I ../../../include/ -L../../../ -llemipc_shared -pthread -lm -ldl
-
+    
 OBJS = $(SRCS:.c=.o)
 
 $(NAME): $(OBJS)

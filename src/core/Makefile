@@ -22,11 +22,11 @@ SRCS =		main.c		\
 		    util.c
 
 
-CFLAGS +=	-I ../../include/ -pthread -lm -g -ldl
+CFLAGS +=	-I ../../include/ -L../../ -llemipc_shared -pthread -lm -ldl
 
 OBJS =		$(SRCS:.c=.o)
 
-#CFLAGS +=	-Wall -Wextra -Werror -L./ -I../../include/
+#CFLAGS +=	-Wall -Wextra -Werror -I../../include/
 
 NAME =		lemipc
 

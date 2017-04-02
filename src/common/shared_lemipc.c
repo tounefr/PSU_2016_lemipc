@@ -1,7 +1,8 @@
 
 #include "common.h"
 
-void init_s_player(t_player *player) {
+void init_s_player(t_player *player)
+{
     player->x = -1;
     player->y = -1;
     player->pid = -1;
@@ -10,7 +11,8 @@ void init_s_player(t_player *player) {
     player->is_master = -1;
 }
 
-char init_s_lemipc(t_lemipc *lemipc, int shm_key) {
+char init_s_lemipc(t_lemipc *lemipc, int shm_key)
+{
     int i;
 
     LOG_MSG("Starting the game\n");
@@ -24,7 +26,8 @@ char init_s_lemipc(t_lemipc *lemipc, int shm_key) {
     return 1;
 }
 
-void clean_ipcs(t_lemipc *lemipc) {
+void clean_ipcs(t_lemipc *lemipc)
+{
     if (lemipc->nbr_players <= 0) {
         shmctl(lemipc->shm_key, IPC_RMID, NULL);
         sem_close(&lemipc->move_lock);
@@ -32,7 +35,8 @@ void clean_ipcs(t_lemipc *lemipc) {
     }
 }
 
-char get_shared_lemipc(t_lemipc **s_lemipc, char *path) {
+char get_shared_lemipc(t_lemipc **s_lemipc, char *path)
+{
     key_t key;
     int shm_key;
     int created;
