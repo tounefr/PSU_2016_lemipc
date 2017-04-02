@@ -1,7 +1,7 @@
 #!/bin/bash
 
-for i in `seq 0 400`; do
-  team=$((RANDOM % 3))
+for i in `seq 0 100`; do
+  team=$((RANDOM % 5))
   ./lemipc `pwd` $team 2> /dev/null > /dev/null&
 done
 

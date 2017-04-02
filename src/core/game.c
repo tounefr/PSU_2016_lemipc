@@ -15,7 +15,7 @@ char		game_start(char *path, int team_nb)
   t_lemipc	*s_lemipc;
 
   catch_signals();
-  srand(time(NULL));
+  srand(time(NULL) * getpid());
   if (!get_shr_mem_handle(&s_lemipc, path))
     return (0);
   return (game_loop(s_lemipc, team_nb));
