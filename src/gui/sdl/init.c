@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "gui_sdl.h"
 #include "common.h"
+#include "gui_sdl.h"
 
 t_lemipc	*g_lemipc = NULL;
 
@@ -144,7 +144,6 @@ int		main(int ac, char **av)
   board.width = 400;
   board.nb_case = 56;
   board.name = "LEMIPC";
-  set_rgb(&color_rgb, "black");
   init(&board, &color_rgb, lemipc);
   return (0);
 }

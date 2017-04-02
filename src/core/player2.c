@@ -33,3 +33,15 @@ void kill_player(t_lemipc *s_lemipc, t_player *player)
     init_s_player(player);
     s_lemipc->nbr_players--;
 }
+
+t_rgb   get_player_color(t_player players[MAX_PLAYERS], int team_id)
+{
+    int i;
+
+    i = -1;
+    while (++i < MAX_PLAYERS) {
+        if (!players[i].is_free && team_id == players[i].team_id)
+            return players[i].color;
+    }
+    return init_rgb(rand() % 200, rand() % 200, rand() % 200);
+}

@@ -15,13 +15,6 @@
 
 #define MAX_SIG 31
 
-typedef struct	s_rgb
-{
-  int		r;
-  int		g;
-  int		b;
-}		t_rgb;
-
 typedef struct	s_board
 {
   int		height;
@@ -31,13 +24,6 @@ typedef struct	s_board
   int		final_case_nb;
   char		*name;
 }		t_board;
-
-/*
-*** rgb.c
-*/
-
-void		rand_rgb(t_rgb *);
-void		set_rgb(t_rgb *, char *);
 
 /*
 *** clear_win.c

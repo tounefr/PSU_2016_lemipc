@@ -36,6 +36,13 @@
 #define GAME_SLEEP 1
 #define SHARED_MEM_LIBRARY "./liblemipc_shared.so"
 
+typedef struct      s_rgb
+{
+    unsigned char   r;
+    unsigned char	g;
+    unsigned char	b;
+}		            t_rgb;
+
 typedef struct s_player
 {
     int x;
@@ -44,6 +51,7 @@ typedef struct s_player
     int is_free;
     int team_id;
     char is_master;
+    t_rgb       color;
     struct s_player *player_focus;
     struct s_player *next;
 } t_player;

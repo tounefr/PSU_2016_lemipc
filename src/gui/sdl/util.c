@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <math.h>
 #include <stdbool.h>
+#include "common.h"
 #include "gui_sdl.h"
 
 int		check_nbr(int nbr, int size)

@@ -13,7 +13,6 @@ CC =		gcc
 RM =		rm -f
 
 SRCS =		init.c		\
-		rgb.c		\
 		clear_win.c	\
 		util.c		\
 

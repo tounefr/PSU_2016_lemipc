@@ -16,6 +16,7 @@ char            init_new_player(t_player **me, int team_id, t_lemipc *lemipc)
     player->is_master = is_player_master(lemipc->players, team_id);
     player->x = xy_pos.x;
     player->y = xy_pos.y;
+    player->color = get_player_color(lemipc->players, team_id);
     *me = player;
     return 1;
 }

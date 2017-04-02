@@ -8,6 +8,7 @@
 ** Last update Sat Apr  1 17:32:30 2017 linder
 */
 
+#include "common.h"
 #include "gui_sdl.h"
 
 void		clear_win(int height, int width, SDL_Renderer *renderer, t_rgb *color)

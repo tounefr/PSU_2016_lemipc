@@ -20,6 +20,18 @@ t_pos       init_pos(int x, int y)
     return pos;
 }
 
+t_rgb       init_rgb(unsigned char r,
+                     unsigned char g,
+                     unsigned char b)
+{
+    t_rgb   rgb;
+
+    rgb.r = r;
+    rgb.g = g;
+    rgb.b = b;
+    return rgb;
+}
+
 void init_dist_cmp(t_dist_cmp *dist_cmp)
 {
     dist_cmp->min = -1;

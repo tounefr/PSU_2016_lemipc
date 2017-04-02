@@ -7,8 +7,6 @@
 
 #include "common.h"
 
-#define MAX_SIG 31
-
 typedef struct s_pos
 {
     int x;
@@ -71,5 +69,9 @@ char two_players_same_team(t_player *list);
 char            has_more_than_2_ennemies_around(
         t_player players[MAX_PLAYERS],
         t_player *player);
+t_rgb       init_rgb(unsigned char r,
+                     unsigned char g,
+                     unsigned char b);
+t_rgb get_player_color(t_player players[MAX_PLAYERS], int team_id);
 
 #endif //PSU_2016_LEMIPC_CORE_H
