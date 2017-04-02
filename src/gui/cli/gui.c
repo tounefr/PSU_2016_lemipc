@@ -80,8 +80,10 @@ int             main(int ac, char **av)
         return 0;
     g_lemipc = lemipc;
     while (1) {
-        if (display_map(lemipc))
+        if (display_map(lemipc)) {
+            clean_ipcs(lemipc);
             return 0;
+        }
         usleep((GAME_SLEEP * 1000000) / 10);
     }
 }
