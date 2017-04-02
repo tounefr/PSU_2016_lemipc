@@ -22,7 +22,7 @@ OBJS =		$(SRCS:.c=.o)
 CFLAGS =	-lSDL2 -lm -I../../../include
 
 
-NAME =		graph
+NAME =		a.out
 
 all:		$(NAME)
 

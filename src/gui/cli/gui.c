@@ -21,7 +21,8 @@ char    check_player(t_lemipc *s_lemipc, char *c, int *x, int *y)
     }
 }
 
-char    display_map(t_lemipc *s_lemipc) {
+char    display_map(t_lemipc *s_lemipc)
+{
     int max;
     int x;
     int y;
@@ -45,7 +46,8 @@ char    display_map(t_lemipc *s_lemipc) {
 }
 
 
-void    sig_handler(int signum) {
+void    sig_handler(int signum)
+{
     if (g_lemipc) {
         if (g_lemipc->nbr_players <= 0) {
             LOG_MSG("Ending game\n");
@@ -55,12 +57,14 @@ void    sig_handler(int signum) {
     exit(0);
 }
 
-char    usage() {
+char    usage()
+{
     fprintf(stderr, "Usage: ./gui path\n");
     return 1;
 }
 
-int             main(int ac, char **av) {
+int             main(int ac, char **av)
+{
     t_lemipc    *lemipc;
 
     if (ac != 2)

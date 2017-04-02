@@ -17,7 +17,7 @@ $(NAME): $(OBJS)
 re: $(NAME)
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) gui.o
 
 fclean: clean
 	$(RM) $(NAME)

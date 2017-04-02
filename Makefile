@@ -34,22 +34,23 @@ $(GUI_CLI_NAME):
 
 all: re
 
-re: $(LEMIPC_SHARED_NAME) $(LEMIPC_NAME) $(GUI_CLI_NAME)
+re: $(LEMIPC_SHARED_NAME) $(LEMIPC_NAME) $(GUI_CLI_NAME) $(GUI_SDL_NAME)
 	$(echo "SUCCESS")
 
 fclean:
 	$(MAKE) -C src/core fclean
 	$(MAKE) -C src/common fclean
-#	$(MAKE) -C src/gui/sdl fclean
-#	$(MAKE) -C src/gui/cli fclean
+	$(MAKE) -C src/gui/sdl fclean
+	$(MAKE) -C src/gui/cli fclean
 	rm $(LEMIPC_NAME)
 	rm $(LEMIPC_SHARED_NAME)
 	rm $(GUI_CLI_NAME)
+	rm $(GUI_SDL_NAME)
 
 clean:
 	$(MAKE) -C src/core clean
 	$(MAKE) -C src/common clean
-#	$(MAKE) -C src/gui/sdl clean
-#	$(MAKE) -C src/gui/cli clean
+	$(MAKE) -C src/gui/sdl clean
+	$(MAKE) -C src/gui/cli clean
 
 .PHONY: re fclean clean
