@@ -25,7 +25,6 @@
 #include <math.h>
 #include <signal.h>
 
-
 #define LOG 1
 #if LOG
 #define LOG_MSG(...) fprintf(stderr, __VA_ARGS__)
@@ -33,7 +32,7 @@
 #define LOG_MSG(...)
 #endif
 
-#define MAX_PLAYERS 500
+#define MAX_PLAYERS 1000
 #define GAME_SLEEP 1
 #define SHARED_MEM_LIBRARY "./liblemipc_shared.so"
 
@@ -46,6 +45,7 @@ typedef struct s_player
     int team_id;
     char is_master;
     struct s_player *player_focus;
+    struct s_player *next;
 } t_player;
 
 typedef struct  s_lemipc

@@ -66,5 +66,10 @@ void kill_player(t_lemipc *s_lemipc, t_player *player);
 char check_player_dead(t_lemipc *s_lemipc, t_player *me);
 void init_dist_cmp(t_dist_cmp *dist_cmp);
 char one_team_playing(t_lemipc *s_lemipc);
+void player_push(t_player **players_list, t_player *player);
+char two_players_same_team(t_player *list);
+char            has_more_than_2_ennemies_around(
+        t_player players[MAX_PLAYERS],
+        t_player *player);
 
 #endif //PSU_2016_LEMIPC_CORE_H

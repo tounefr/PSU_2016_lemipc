@@ -16,25 +16,60 @@ char    focus_ennemy(t_player *me, t_player players[MAX_PLAYERS])
     return 0;
 }
 
-char        count_ennemies_around(t_player players[MAX_PLAYERS],
-                                  t_player *player)
+void            player_push(t_player **players_list, t_player *player)
 {
-    int     x;
-    int     y;
-    char    c;
+    t_player    *last;
 
-    c = 0;
+    if (player == NULL)
+        return;
+    player->next = NULL;
+    if (*players_list == NULL)
+        *players_list = player;
+    else {
+        last = *players_list;
+        while (last->next)
+            last = last->next;
+        last->next = player;
+    }
+}
+
+char    two_players_same_team(t_player *list)
+{
+    int team_id;
+
+    if (!list)
+        return 0;
+    team_id = list->team_id;
+    list = list->next;
+    while (list) {
+        if (list->team_id == team_id)
+            return 1;
+        list = list->next;
+    }
+    return 0;
+}
+
+char            has_more_than_2_ennemies_around(
+                    t_player players[MAX_PLAYERS],
+                    t_player *player)
+{
+    t_player    *players_list;
+    int         x;
+    int         y;
+
     x = player->x;
     y = player->y;
-    c += check_ennemy_on_this_pos(players, player, x, y - 1);
-    c += check_ennemy_on_this_pos(players, player, x + 1, y - 1);
-    c += check_ennemy_on_this_pos(players, player, x + 1, y);
-    c += check_ennemy_on_this_pos(players, player, x + 1, y + 1);
-    c += check_ennemy_on_this_pos(players, player, x, y + 1);
-    c += check_ennemy_on_this_pos(players, player, x - 1, y + 1);
-    c += check_ennemy_on_this_pos(players, player, x - 1, y);
-    c += check_ennemy_on_this_pos(players, player, x - 1, y - 1);
-    return c;
+    players_list = NULL;
+    player_push(&players_list, has_player_on_this_pos(players, x, y - 1));
+    player_push(&players_list, has_player_on_this_pos(players, x + 1, y - 1));
+    player_push(&players_list, has_player_on_this_pos(players, x + 1, y));
+    player_push(&players_list, has_player_on_this_pos(players, x + 1, y + 1));
+    player_push(&players_list, has_player_on_this_pos(players, x, y + 1));
+    player_push(&players_list, has_player_on_this_pos(players, x - 1, y + 1));
+    player_push(&players_list, has_player_on_this_pos(players, x - 1, y));
+    player_push(&players_list, has_player_on_this_pos(players, x - 1, y - 1));
+    return two_players_same_team(players_list);
+
 }
 
 void    eat_ennemies_around(t_lemipc *s_lemipc)
@@ -45,8 +80,7 @@ void    eat_ennemies_around(t_lemipc *s_lemipc)
     while (++i < MAX_PLAYERS) {
         if (s_lemipc->players[i].pid != -1 &&
             s_lemipc->players[i].is_free == 0) {
-            if (count_ennemies_around(s_lemipc->players,
-                                      &s_lemipc->players[i]) > 1)
+            if (has_more_than_2_ennemies_around(s_lemipc->players, &s_lemipc->players[i]))
                 kill_player(s_lemipc, &s_lemipc->players[i]);
         }
     }
