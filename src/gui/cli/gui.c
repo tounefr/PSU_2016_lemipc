@@ -7,7 +7,7 @@
 
 t_lemipc *g_lemipc = NULL;
 
-char    check_player(t_lemipc *s_lemipc, char *c, int *x, int *y)
+char    check_player(t_lemipc *s_lemipc, int *c, int *x, int *y)
 {
     int i2;
 

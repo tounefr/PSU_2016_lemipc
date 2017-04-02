@@ -13,7 +13,7 @@ char            init_new_player(t_player **me, int team_id, t_lemipc *lemipc)
     player->is_free = 0;
     player->pid = getpid();
     player->team_id = team_id;
-    player->is_master = is_player_master(&lemipc->players, team_id);
+    player->is_master = is_player_master(lemipc->players, team_id);
     player->x = xy_pos.x;
     player->y = xy_pos.y;
     *me = player;
@@ -44,8 +44,6 @@ t_player    *get_player_in_same_team(t_player *me, t_player *players)
 
 char            on_player_leave(t_player *me, t_lemipc *lemipc)
 {
-    t_player    *smne_in_team;
-
     if (me == NULL)
         return 0;
     printf("You've been killed\n");

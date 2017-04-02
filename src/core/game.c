@@ -15,7 +15,7 @@ char            game_start(char *path, int team_nb)
 void game_play(t_lemipc *s_lemipc, t_player *me)
 {
     if (!can_playing(s_lemipc, me) ||
-        !focus_ennemy(me, &s_lemipc->players) ||
+        !focus_ennemy(me, s_lemipc->players) ||
         !move_forward(s_lemipc, me)) {
         LOG_MSG("[IDLE] Me: pid=%d x=%d y=%d team_id=%d\n",
                 me->pid,

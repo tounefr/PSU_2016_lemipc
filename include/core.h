@@ -38,31 +38,31 @@ char new_player_slot(t_player **me, t_lemipc *lemipc, int team_id);
 void init_s_player(t_player *player);
 char init_s_lemipc(t_lemipc *lemipc, int shm_key);
 char can_playing(t_lemipc *s_lemipc, t_player *me);
-char focus_ennemy(t_player *me, t_player *players);
+char focus_ennemy(t_player *me, t_player players[MAX_PLAYERS]);
 char display_map(t_lemipc *s_lemipc);
 char is_good_pos(int x, int y);
 t_pos init_pos(int x, int y);
 char check_dest_pos(t_player *me,
                     t_dist_cmp *dist_cmp,
                     t_pos test_pos,
-                    t_player (*players)[MAX_PLAYERS]);
-char eat_ennemies_around(t_lemipc *s_lemipc);
+                    t_player players[MAX_PLAYERS]);
+void eat_ennemies_around(t_lemipc *s_lemipc);
 char move_forward(t_lemipc *s_lemipc, t_player *me);
 char game_loop(t_lemipc *s_lemipc, int team_nb);
 char game_start(char *path, int team_nb);
 void game_play(t_lemipc *s_lemipc, t_player *me);
 void clean_ipcs(t_lemipc *lemipc);
 void sighandler(int signum);
-char count_ennemies_around(t_player (*players)[MAX_PLAYERS], t_player *player);
+char count_ennemies_around(t_player players[MAX_PLAYERS], t_player *player);
 t_player *has_player_on_this_pos(t_player *players, int x, int y);
 //char check_ennemy_on_this_pos(t_player (*players)[MAX_PLAYERS], t_player *player, int x, int y);
-char check_ennemy_on_this_pos(t_player (*players)[MAX_PLAYERS], t_player *player, int x, int y);
+char check_ennemy_on_this_pos(t_player players[MAX_PLAYERS], t_player *player, int x, int y);
 char get_shr_mem_handle(t_lemipc **s_lemipc, char *path);
 char	exit_error(char *msg, char exit_number);
 int  abs(int x);
 char is_nbr(char *str);
 void catch_signals();
-char kill_player(t_lemipc *s_lemipc, t_player *player);
+void kill_player(t_lemipc *s_lemipc, t_player *player);
 char check_player_dead(t_lemipc *s_lemipc, t_player *me);
 void init_dist_cmp(t_dist_cmp *dist_cmp);
 char one_team_playing(t_lemipc *s_lemipc);

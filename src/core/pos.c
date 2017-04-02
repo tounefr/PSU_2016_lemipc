@@ -17,7 +17,7 @@ int calc_dist(int x1, int y1, int x2, int y2)
 char    check_dest_pos(t_player *me,
                        t_dist_cmp *dist_cmp,
                        t_pos test_pos,
-                       t_player (*players)[MAX_PLAYERS])
+                       t_player players[MAX_PLAYERS])
 {
     int v;
 
@@ -45,8 +45,7 @@ t_pos       rand_player_pos(t_lemipc *lemipc)
 
     i = -1;
     available_pos = 0;
-    rand_pos.x = -1;
-    rand_pos.y = -1;
+    rand_pos = init_pos(-1, -1);
     while (++i < MAX_PLAYERS) {
         if (lemipc->players[i].is_free)
             available_pos++;

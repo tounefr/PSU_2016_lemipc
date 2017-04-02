@@ -5,6 +5,7 @@ void            sighandler(int signum)
 {
     t_player    *player;
 
+    signum = signum;
     if (g_lemipc != NULL) {
         sem_wait(&g_lemipc->move_lock);
         if ((player = get_player_slot(g_lemipc))) {

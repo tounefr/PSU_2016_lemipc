@@ -10,7 +10,7 @@ t_pos       get_xy_pos(int i)
     return pos;
 }
 
-char            check_ennemy_on_this_pos(t_player (*players)[MAX_PLAYERS],
+char            check_ennemy_on_this_pos(t_player players[MAX_PLAYERS],
                                          t_player *player, int x, int y)
 {
     t_player    *ennemy;

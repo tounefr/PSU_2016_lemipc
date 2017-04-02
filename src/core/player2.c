@@ -28,7 +28,7 @@ char check_player_dead(t_lemipc *s_lemipc, t_player *me)
     return 1;
 }
 
-char kill_player(t_lemipc *s_lemipc, t_player *player)
+void kill_player(t_lemipc *s_lemipc, t_player *player)
 {
     init_s_player(player);
     s_lemipc->nbr_players--;

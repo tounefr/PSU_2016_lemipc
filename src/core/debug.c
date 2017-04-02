@@ -16,8 +16,7 @@ void    debug_players(t_player *players)
                    players[i].is_free,
                    players[i].pid,
                    players[i].team_id,
-                   players[i].is_master
-            );
+                   players[i].is_master);
         }
     }
     printf("count = %d\n", c);

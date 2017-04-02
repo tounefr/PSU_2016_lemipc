@@ -1,6 +1,6 @@
 #include "core.h"
 
-char    focus_ennemy(t_player *me, t_player *players)
+char    focus_ennemy(t_player *me, t_player players[MAX_PLAYERS])
 {
     int i;
 
@@ -16,7 +16,7 @@ char    focus_ennemy(t_player *me, t_player *players)
     return 0;
 }
 
-char        count_ennemies_around(t_player (*players)[MAX_PLAYERS],
+char        count_ennemies_around(t_player players[MAX_PLAYERS],
                                   t_player *player)
 {
     int     x;
@@ -37,7 +37,7 @@ char        count_ennemies_around(t_player (*players)[MAX_PLAYERS],
     return c;
 }
 
-char    eat_ennemies_around(t_lemipc *s_lemipc)
+void    eat_ennemies_around(t_lemipc *s_lemipc)
 {
     int i;
 
@@ -45,7 +45,7 @@ char    eat_ennemies_around(t_lemipc *s_lemipc)
     while (++i < MAX_PLAYERS) {
         if (s_lemipc->players[i].pid != -1 &&
             s_lemipc->players[i].is_free == 0) {
-            if (count_ennemies_around(&s_lemipc->players,
+            if (count_ennemies_around(s_lemipc->players,
                                       &s_lemipc->players[i]) > 1)
                 kill_player(s_lemipc, &s_lemipc->players[i]);
         }

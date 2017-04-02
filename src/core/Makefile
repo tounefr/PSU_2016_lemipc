@@ -26,7 +26,7 @@ SRCS =		main.c		\
 		    share_mem.c \
 		    ennemy.c
 
-CFLAGS +=	-I ../../include/ -L../../ -llemipc_shared -pthread -lm -ldl
+CFLAGS +=	-I ../../include/ -L../../ -llemipc_shared -pthread -lm -ldl -Wall -Wextra
 
 OBJS =		$(SRCS:.c=.o)
 
